@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karte - FlatRate</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Work+Sans:wght@300;400;500;600&display=swap"
+          rel="stylesheet">
+    <link rel="icon" type="image/png" href="../img/logo.svg">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+</head>
+<body>
+<!-- HTML STRUKTUR -->
+<div class="page-wrapper">
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo-section">
+                    <div class="logo-icon">
+                        <img src="../img/logo.svg" alt="FlatRate Logo" class="logo-image">
+                    </div>
+                    <div class="logo-text">
+                        <span class="logo-title">FlatRate</span>
+                        <span class="logo-subtitle">Bewerte deinen Vermieter</span>
+                    </div>
+                </a>
+                <nav class="nav">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="login.html" class="nav-link">Login</a>
+                    <a href="add-flat.html" class="btn btn-primary">Wohnung bewerten</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Map Section -->
+    <section class="map-section">
+        <div class="map-container">
+            <!-- Search Bar über der Karte -->
+            <div class="map-search-wrapper">
+                <div class="map-search-box">
+                    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    <input
+                            type="text"
+                            class="map-search-input"
+                            placeholder="Adresse oder Stadt eingeben..."
+                            id="mapSearchInput"
+                    >
+                    <select class="radius-select" id="radiusSelect">
+                        <option value="1">1 km</option>
+                        <option value="2">2 km</option>
+                        <option value="5" selected>5 km</option>
+                        <option value="10">10 km</option>
+                        <option value="20">20 km</option>
+                    </select>
+                    <button class="map-search-button" id="mapSearchButton">
+                        Suchen
+                    </button>
+                </div>
+
+                <!-- Filter Toggle -->
+                <button class="filter-toggle" id="filterToggle">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <line x1="4" y1="6" x2="20" y2="6"></line>
+                        <line x1="4" y1="12" x2="20" y2="12"></line>
+                        <line x1="4" y1="18" x2="20" y2="18"></line>
+                    </svg>
+                    Filter
+                </button>
+            </div>
+
+            <!-- Filter Panel -->
+            <div class="filter-panel" id="filterPanel">
+                <div class="filter-header">
+                    <h3>Filter</h3>
+                    <button class="filter-close" id="filterClose">×</button>
+                </div>
+                <div class="filter-content">
+                    <div class="filter-group">
+                        <label class="filter-label">Mindestbewertung</label>
+                        <select class="filter-select" id="minRating">
+                            <option value="0">Alle</option>
+                            <option value="2">2+ Sterne</option>
+                            <option value="3">3+ Sterne</option>
+                            <option value="4">4+ Sterne</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">Stadt</label>
+                        <select class="filter-select" id="cityFilter">
+                            <option value="">Alle Städte</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" id="applyFilters">Filter anwenden</button>
+                </div>
+            </div>
+
+            <!-- Die Karte -->
+            <div id="map"></div>
+
+            <!-- Loading Indicator -->
+            <div class="map-loading" id="mapLoading">
+                <div class="loading-spinner"></div>
+                <p>Wohnungen werden geladen...</p>
+            </div>
+        </div>
+
+        <!-- Listing Sidebar -->
+        <div class="listing-sidebar">
+            <div class="sidebar-header">
+                <h2 class="sidebar-title">Wohnungen</h2>
+                <div class="results-count" id="resultsCount">0 Ergebnisse</div>
+            </div>
+
+            <div class="listing-container" id="listingContainer">
+                <!-- Wohnungen werden hier dynamisch eingefügt -->
+            </div>
+        </div>
+    </section>
+</div>
+
+<style>
+    /* CSS - Design gemäß Moodboard "Jade" */
+
+    :root {
+        --jade-dark: #0B3B3C;
+        --jade-primary: #1B5E5F;
+        --jade-medium: #2D7F7F;
+        --jade-light: #4FA09F;
+        --jade-mint: #7FC8C3;
+        --jade-pale: #A8D5D3;
+
+        --anthracite: #2C3333;
+        --gray-dark: #3D4545;
+        --gray-medium: #5F6868;
+        --gray-light: #E8EFEF;
+        --white: #FFFFFF;
+        --off-white: #F8FAFA;
+
+        --font-display: 'Playfair Display', serif;
+        --font-body: 'Work Sans', sans-serif;
+
+        --space-xs: 0.5rem;
+        --space-sm: 1rem;
+        --space-md: 2rem;
+        --space-lg: 4rem;
+
+        --shadow-sm: 0 2px 8px rgba(11, 59, 60, 0.08);
+        --shadow-md: 0 4px 16px rgba(11, 59, 60, 0.12);
+        --shadow-lg: 0 8px 32px rgba(11, 59, 60, 0.16);
+
+        --radius-sm: 8px;
+        --radius-md: 12px;
+        --radius-lg: 20px;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: var(--font-body);
+        background: var(--off-white);
+        color: var(--anthracite);
+        overflow: hidden;
+    }
+
+    .page-wrapper {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Header */
+    .header {
+        background: var(--jade-dark);
+        padding: var(--space-sm) 0;
+        box-shadow: var(--shadow-md);
+        z-index: 1000;
+    }
+
+    .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 var(--space-md);
+    }
+
+    .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo-section {
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+        text-decoration: none;
+    }
+
+    .logo-icon {
+        width: 40px;
+        height: 40px;
+        color: var(--jade-mint);
+        transition: transform 0.3s ease;
+    }
+
+    .logo-section:hover .logo-icon {
+        transform: rotate(90deg) scale(1.1);
+    }
+
+    .logo-text {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .logo-title {
+        font-family: var(--font-display);
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--jade-mint);
+        line-height: 1;
+    }
+
+    .logo-subtitle {
+        font-size: 0.7rem;
+        color: var(--jade-pale);
+        font-weight: 300;
+    }
+
+    .nav {
+        display: flex;
+        gap: var(--space-md);
+        align-items: center;
+    }
+
+    .nav-link {
+        color: var(--jade-pale);
+        text-decoration: none;
+        font-weight: 400;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--jade-mint);
+        transition: width 0.3s ease;
+    }
+
+    .nav-link:hover {
+        color: var(--jade-mint);
+    }
+
+    .nav-link:hover::after {
+        width: 100%;
+    }
+
+    .btn {
+        padding: 0.625rem 1.25rem;
+        border-radius: var(--radius-md);
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        font-family: var(--font-body);
+        font-size: 0.9rem;
+    }
+
+    .btn-primary {
+        background: var(--jade-medium);
+        color: var(--white);
+        box-shadow: var(--shadow-sm);
+    }
+
+    .btn-primary:hover {
+        background: var(--jade-primary);
+        box-shadow: var(--shadow-md);
+        transform: translateY(-2px);
+    }
+
+    /* Map Section */
+    .map-section {
+        flex: 1;
+        display: flex;
+        overflow: hidden;
+    }
+
+    .map-container {
+        flex: 1;
+        position: relative;
+        background: var(--gray-light);
+    }
+
+    #map {
+        width: 100%;
+        height: 100%;
+    }
+
+    /* Map Search */
+    .map-search-wrapper {
+        position: absolute;
+        top: var(--space-md);
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 500;
+        display: flex;
+        gap: var(--space-sm);
+        animation: slideDown 0.5s ease-out;
+        max-width: 700px;
+    }
+
+    @keyframes slideDown {
+        from {
+            transform: translate(-50%, -20px);
+            opacity: 0;
+        }
+        to {
+            transform: translate(-50%, 0);
+            opacity: 1;
+        }
+    }
+
+    .map-search-box {
+        background: var(--white);
+        border-radius: var(--radius-lg);
+        padding: var(--space-xs);
+        display: flex;
+        align-items: center;
+        flex: 1;
+        box-shadow: var(--shadow-lg);
+    }
+
+    .search-icon {
+        width: 20px;
+        height: 20px;
+        color: var(--gray-medium);
+        margin: 0 var(--space-sm);
+        stroke-width: 2;
+    }
+
+    .map-search-input {
+        flex: 1;
+        border: none;
+        outline: none;
+        font-size: 0.95rem;
+        font-family: var(--font-body);
+        color: var(--anthracite);
+        padding: var(--space-xs);
+    }
+
+    .radius-select {
+        border: none;
+        outline: none;
+        font-size: 0.9rem;
+        font-family: var(--font-body);
+        color: var(--jade-dark);
+        font-weight: 500;
+        padding: var(--space-xs) var(--space-sm);
+        background: var(--gray-light);
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        margin-right: var(--space-xs);
+    }
+
+    .map-search-input::placeholder {
+        color: var(--gray-medium);
+    }
+
+    .map-search-button {
+        background: var(--jade-medium);
+        color: var(--white);
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: var(--radius-md);
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .map-search-button:hover {
+        background: var(--jade-primary);
+        transform: scale(1.05);
+    }
+
+    /* Filter Toggle */
+    .filter-toggle {
+        background: var(--white);
+        color: var(--jade-dark);
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: var(--radius-md);
+        font-weight: 500;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: var(--space-xs);
+        box-shadow: var(--shadow-lg);
+        transition: all 0.3s ease;
+    }
+
+    .filter-toggle:hover {
+        background: var(--jade-dark);
+        color: var(--white);
+        transform: translateY(-2px);
+    }
+
+    .filter-toggle svg {
+        width: 20px;
+        height: 20px;
+        stroke-width: 2;
+    }
+
+    /* Filter Panel */
+    .filter-panel {
+        position: absolute;
+        top: 80px;
+        left: var(--space-md);
+        width: 300px;
+        background: var(--white);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-lg);
+        z-index: 500;
+        transform: translateX(-350px);
+        transition: transform 0.4s ease;
+    }
+
+    .filter-panel.active {
+        transform: translateX(0);
+    }
+
+    .filter-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: var(--space-md);
+        border-bottom: 1px solid var(--gray-light);
+    }
+
+    .filter-header h3 {
+        font-family: var(--font-display);
+        color: var(--jade-dark);
+        font-size: 1.25rem;
+    }
+
+    .filter-close {
+        background: none;
+        border: none;
+        font-size: 2rem;
+        color: var(--gray-medium);
+        cursor: pointer;
+        line-height: 1;
+        transition: color 0.3s ease;
+    }
+
+    .filter-close:hover {
+        color: var(--jade-dark);
+    }
+
+    .filter-content {
+        padding: var(--space-md);
+    }
+
+    .filter-group {
+        margin-bottom: var(--space-md);
+    }
+
+    .filter-label {
+        display: block;
+        font-weight: 500;
+        color: var(--jade-dark);
+        margin-bottom: var(--space-xs);
+        font-size: 0.9rem;
+    }
+
+    .filter-select {
+        width: 100%;
+        padding: 0.75rem;
+        border: 2px solid var(--gray-light);
+        border-radius: var(--radius-sm);
+        font-family: var(--font-body);
+        font-size: 0.95rem;
+        color: var(--anthracite);
+        transition: border-color 0.3s ease;
+    }
+
+    .filter-select:focus {
+        outline: none;
+        border-color: var(--jade-medium);
+    }
+
+    /* Loading */
+    .map-loading {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        z-index: 400;
+        background: var(--white);
+        padding: var(--space-lg);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .map-loading.hidden {
+        display: none;
+    }
+
+    .loading-spinner {
+        width: 50px;
+        height: 50px;
+        border: 4px solid var(--gray-light);
+        border-top-color: var(--jade-medium);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 0 auto var(--space-sm);
+    }
+
+    @keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    .map-loading p {
+        color: var(--jade-dark);
+        font-weight: 500;
+    }
+
+    /* Listing Sidebar */
+    .listing-sidebar {
+        width: 400px;
+        background: var(--white);
+        border-left: 1px solid var(--gray-light);
+        display: flex;
+        flex-direction: column;
+        box-shadow: var(--shadow-md);
+    }
+
+    .sidebar-header {
+        padding: var(--space-md);
+        border-bottom: 1px solid var(--gray-light);
+    }
+
+    .sidebar-title {
+        font-family: var(--font-display);
+        color: var(--jade-dark);
+        font-size: 1.5rem;
+        margin-bottom: var(--space-xs);
+    }
+
+    .results-count {
+        color: var(--gray-medium);
+        font-size: 0.9rem;
+    }
+
+    .listing-container {
+        flex: 1;
+        overflow-y: auto;
+        padding: var(--space-sm);
+    }
+
+    /* Flat Card */
+    .flat-card {
+        background: var(--off-white);
+        border-radius: var(--radius-md);
+        padding: var(--space-md);
+        margin-bottom: var(--space-sm);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+    }
+
+    .flat-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-md);
+        border-color: var(--jade-mint);
+    }
+
+    .flat-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: var(--space-sm);
+    }
+
+    .flat-address {
+        font-weight: 600;
+        color: var(--jade-dark);
+        font-size: 1rem;
+    }
+
+    .flat-city {
+        color: var(--gray-medium);
+        font-size: 0.85rem;
+    }
+
+    .flat-rating {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+
+    .rating-stars {
+        color: var(--jade-medium);
+    }
+
+    .flat-description {
+        color: var(--gray-dark);
+        font-size: 0.9rem;
+        line-height: 1.5;
+        margin-bottom: var(--space-sm);
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .flat-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.85rem;
+        color: var(--gray-medium);
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+        .listing-sidebar {
+            width: 350px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .map-section {
+            flex-direction: column;
+        }
+
+        .listing-sidebar {
+            width: 100%;
+            height: 40%;
+            border-left: none;
+            border-top: 1px solid var(--gray-light);
+        }
+
+        .map-container {
+            height: 60%;
+        }
+
+        .filter-panel {
+            right: var(--space-sm);
+            left: var(--space-sm);
+            width: auto;
+        }
+    }
+</style>
+
+<!-- Leaflet JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+
+<script>
+    /* JavaScript - Logik & DB-Anbindung */
+
+    const API_URL = 'http://localhost:3000/api';
+
+    let map;
+    let markers = [];
+    let allFlatsData = [];
+    let searchCircle = null;
+    let searchMarker = null;
+    let currentSearchLocation = null;
+
+    // Initialize Map
+    function initMap() {
+        map = L.map('map').setView([48.7758, 9.1829], 11);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors',
+            maxZoom: 19
+        }).addTo(map);
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const searchQuery = urlParams.get('search');
+
+        if (searchQuery) {
+            document.getElementById('mapSearchInput').value = searchQuery;
+            setTimeout(() => {
+                performSearch();
+            }, 1000);
+        }
+    }
+
+    // Geocode eine Adresse
+    async function geocodeAddress(address) {
+        try {
+            const response = await fetch(
+                `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}&limit=1&addressdetails=1`
+            );
+            const data = await response.json();
+
+            if (data && data.length > 0) {
+                return {
+                    lat: parseFloat(data[0].lat),
+                    lon: parseFloat(data[0].lon)
+                };
+            }
+            return null;
+        } catch (error) {
+            console.error('Geocoding error:', error);
+            return null;
+        }
+    }
+
+    // Load Flats
+    async function loadFlats() {
+        try {
+            const tempFlats = [
+                {
+                    id: 1,
+                    address: "Zeppelinstraße 10, 71088 Holzgerlingen",
+                    shortAddress: "Zeppelinstraße 10",
+                    city: "Holzgerlingen",
+                    zipCode: "71088",
+                    description: "Schöne 3-Zimmer Wohnung in ruhiger Lage. Vermieter sehr zuverlässig und freundlich.",
+                    rating_overall: 4.7,
+                    rating_count: 3
+                },
+                {
+                    id: 2,
+                    address: "Zeppelinstraße 18, 71088 Holzgerlingen",
+                    shortAddress: "Zeppelinstraße 18",
+                    city: "Holzgerlingen",
+                    zipCode: "71088",
+                    description: "Gemütliche Wohnung, aber Vermieter manchmal schwer erreichbar.",
+                    rating_overall: 3.5,
+                    rating_count: 2
+                },
+                {
+                    id: 3,
+                    address: "Zeppelinstraße 3, 71088 Holzgerlingen",
+                    shortAddress: "Zeppelinstraße 3",
+                    city: "Holzgerlingen",
+                    zipCode: "71088",
+                    description: "Renovierungsbedürftig, Vermieter reagiert nicht auf Mängel.",
+                    rating_overall: 2.2,
+                    rating_count: 5
+                },
+                {
+                    id: 4,
+                    address: "Marktplatz 1, 70173 Stuttgart",
+                    shortAddress: "Marktplatz 1",
+                    city: "Stuttgart",
+                    zipCode: "70173",
+                    description: "Moderne Wohnung im Herzen der Stadt. Top Vermieter!",
+                    rating_overall: 4.9,
+                    rating_count: 7
+                }
+            ];
+
+            console.log('Starte Geocoding für alle Adressen...');
+
+            for (const flat of tempFlats) {
+                const coords = await geocodeAddress(flat.address);
+                if (coords) {
+                    flat.latitude = coords.lat;
+                    flat.longitude = coords.lon;
+                    console.log(`✓ ${flat.shortAddress}: ${coords.lat}, ${coords.lon}`);
+                } else {
+                    console.error(`✗ Geocoding fehlgeschlagen für: ${flat.address}`);
+                }
+                await new Promise(resolve => setTimeout(resolve, 1000));
+            }
+
+            allFlatsData = tempFlats.filter(f => f.latitude && f.longitude);
+            console.log(`${allFlatsData.length} Wohnungen erfolgreich geladen`);
+
+            displayFlats(allFlatsData);
+            populateCityFilter();
+            hideLoading();
+
+        } catch (error) {
+            console.error('Error loading flats:', error);
+            hideLoading();
+        }
+    }
+
+    // Display Flats
+    function displayFlats(flats) {
+        markers.forEach(marker => map.removeLayer(marker));
+        markers = [];
+
+        const listingContainer = document.getElementById('listingContainer');
+        listingContainer.innerHTML = '';
+
+        document.getElementById('resultsCount').textContent = `${flats.length} ${flats.length === 1 ? 'Ergebnis' : 'Ergebnisse'}`;
+
+        if (flats.length === 0) {
+            listingContainer.innerHTML = `
+                    <div style="text-align: center; padding: var(--space-lg); color: var(--gray-medium);">
+                        <p style="font-weight: 500; margin-bottom: 0.5rem;">Keine Wohnungen gefunden</p>
+                        <p style="font-size: 0.9rem;">Versuche einen größeren Suchradius oder andere Filter.</p>
+                    </div>
+                `;
+            return;
+        }
+
+        flats.forEach(flat => {
+            const markerColor = getRatingColor(flat.rating_overall);
+
+            const customIcon = L.divIcon({
+                className: 'custom-marker-wrapper',
+                html: `<div style="
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 50% 50% 50% 0;
+                        transform: rotate(-45deg);
+                        background: ${markerColor};
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                        border: 3px solid white;
+                        font-weight: 700;
+                        font-size: 0.9rem;
+                        color: white;
+                    ">
+                        <span style="transform: rotate(45deg);">${flat.rating_overall.toFixed(1)}</span>
+                    </div>`,
+                iconSize: [40, 40],
+                iconAnchor: [20, 40]
+            });
+
+            const marker = L.marker([flat.latitude, flat.longitude], {icon: customIcon})
+                .addTo(map)
+                .bindPopup(`
+                        <div style="font-family: var(--font-body); min-width: 200px;">
+                            <h3 style="font-family: var(--font-display); color: var(--jade-dark); margin-bottom: 0.5rem; font-size: 1.1rem;">
+                                ${flat.shortAddress}
+                            </h3>
+                            <p style="color: var(--gray-medium); font-size: 0.85rem; margin-bottom: 0.5rem;">
+                                ${flat.city}, ${flat.zipCode}
+                            </p>
+                            <p style="font-weight: 600; color: ${markerColor}; font-size: 1rem; margin-bottom: 0.75rem;">
+                                ★ ${flat.rating_overall.toFixed(1)} (${flat.rating_count} Bewertungen)
+                            </p>
+                            <button onclick="goToFlat(${flat.id})" style="background: var(--jade-medium); color: white; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 500; width: 100%;">
+                                Details ansehen
+                            </button>
+                        </div>
+                    `);
+
+            marker.on('click', () => {
+                highlightCard(flat.id);
+            });
+
+            markers.push(marker);
+
+            const card = createFlatCard(flat);
+            listingContainer.appendChild(card);
+        });
+    }
+
+    // Create Flat Card
+    function createFlatCard(flat) {
+        const card = document.createElement('div');
+        card.className = 'flat-card';
+        card.dataset.flatId = flat.id;
+
+        const stars = '★'.repeat(Math.round(flat.rating_overall));
+
+        card.innerHTML = `
+                <div class="flat-header">
+                    <div>
+                        <div class="flat-address">${flat.shortAddress}</div>
+                        <div class="flat-city">${flat.city}, ${flat.zipCode}</div>
+                    </div>
+                    <div class="flat-rating">
+                        <span class="rating-stars">${stars}</span>
+                        ${flat.rating_overall.toFixed(1)}
+                    </div>
+                </div>
+                <div class="flat-description">${flat.description}</div>
+                <div class="flat-footer">
+                    <span>${flat.rating_count} Bewertungen</span>
+                    <span style="color: var(--jade-medium); font-weight: 500;">Details →</span>
+                </div>
+            `;
+
+        card.addEventListener('click', () => {
+            goToFlat(flat.id);
+        });
+
+        return card;
+    }
+
+    // Get Rating Color
+    function getRatingColor(rating) {
+        if (rating >= 4.5) return '#2D7F7F';
+        if (rating >= 3.5) return '#4FA09F';
+        if (rating >= 2.5) return '#7FC8C3';
+        return '#A8D5D3';
+    }
+
+    // Navigate to Flat
+    function goToFlat(flatId) {
+        window.location.href = `flat.html?id=${flatId}`;
+    }
+
+    // Highlight Card
+    function highlightCard(flatId) {
+        document.querySelectorAll('.flat-card').forEach(card => {
+            card.style.borderColor = 'transparent';
+        });
+
+        const targetCard = document.querySelector(`[data-flat-id="${flatId}"]`);
+        if (targetCard) {
+            targetCard.style.borderColor = 'var(--jade-mint)';
+            targetCard.scrollIntoView({behavior: 'smooth', block: 'center'});
+        }
+    }
+
+    // Perform Search
+    async function performSearch() {
+        const query = document.getElementById('mapSearchInput').value.trim();
+
+        if (!query) {
+            alert('Bitte gib eine Adresse oder Stadt ein.');
+            return;
+        }
+
+        console.log('Suche nach:', query);
+
+        const coords = await geocodeAddress(query);
+
+        if (!coords) {
+            alert('Adresse konnte nicht gefunden werden. Bitte versuche es erneut.');
+            return;
+        }
+
+        console.log('Gefundene Koordinaten:', coords);
+        currentSearchLocation = coords;
+
+        const radius = parseFloat(document.getElementById('radiusSelect').value);
+
+        // Entferne alte Marker und Kreis
+        if (searchCircle) {
+            map.removeLayer(searchCircle);
+        }
+        if (searchMarker) {
+            map.removeLayer(searchMarker);
+        }
+
+        // Setze Karte auf Position
+        map.setView([coords.lat, coords.lon], 13);
+
+        // Suchmarker
+        searchMarker = L.marker([coords.lat, coords.lon], {
+            icon: L.divIcon({
+                className: 'search-marker',
+                html: '<div style="width: 30px; height: 30px; background: #1B5E5F; border: 4px solid white; border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.3);"></div>',
+                iconSize: [30, 30],
+                iconAnchor: [15, 15]
+            })
+        }).addTo(map)
+            .bindPopup(`<b>Suchstandort:</b><br>${query}`)
+            .openPopup();
+
+        // Radius-Kreis
+        searchCircle = L.circle([coords.lat, coords.lon], {
+            color: '#2D7F7F',
+            fillColor: '#7FC8C3',
+            fillOpacity: 0.2,
+            weight: 3,
+            radius: radius * 1000
+        }).addTo(map);
+
+        console.log('Kreis hinzugefügt mit Radius:', radius, 'km');
+
+        // Filtere Wohnungen
+        filterByRadius(coords, radius);
+    }
+
+    // Berechne Distanz
+    function calculateDistance(lat1, lon1, lat2, lon2) {
+        const R = 6371;
+        const dLat = (lat2 - lat1) * Math.PI / 180;
+        const dLon = (lon2 - lon1) * Math.PI / 180;
+        const a =
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R * c;
+    }
+
+    // Filter by Radius
+    function filterByRadius(centerCoords, radiusKm) {
+        const filtered = allFlatsData.filter(flat => {
+            const distance = calculateDistance(
+                centerCoords.lat,
+                centerCoords.lon,
+                flat.latitude,
+                flat.longitude
+            );
+            return distance <= radiusKm;
+        });
+
+        console.log(`${filtered.length} Wohnungen im Radius von ${radiusKm} km gefunden`);
+        displayFlats(filtered);
+    }
+
+    // Apply Filters
+    function applyFilters() {
+        const minRating = parseFloat(document.getElementById('minRating').value);
+        const cityFilter = document.getElementById('cityFilter').value;
+
+        let filtered = allFlatsData;
+
+        if (minRating > 0) {
+            filtered = filtered.filter(flat => flat.rating_overall >= minRating);
+        }
+
+        if (cityFilter) {
+            filtered = filtered.filter(flat => flat.city === cityFilter);
+        }
+
+        displayFlats(filtered);
+    }
+
+    // Populate City Filter
+    function populateCityFilter() {
+        const cities = [...new Set(allFlatsData.map(flat => flat.city))].sort();
+        const select = document.getElementById('cityFilter');
+
+        select.innerHTML = '<option value="">Alle Städte</option>';
+
+        cities.forEach(city => {
+            const option = document.createElement('option');
+            option.value = city;
+            option.textContent = city;
+            select.appendChild(option);
+        });
+    }
+
+    // Hide Loading
+    function hideLoading() {
+        document.getElementById('mapLoading').classList.add('hidden');
+    }
+
+    // Event Listeners
+    document.getElementById('mapSearchButton').addEventListener('click', performSearch);
+
+    document.getElementById('mapSearchInput').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            performSearch();
+        }
+    });
+
+    document.getElementById('radiusSelect').addEventListener('change', () => {
+        if (currentSearchLocation) {
+            performSearch();
+        }
+    });
+
+    document.getElementById('filterToggle').addEventListener('click', () => {
+        document.getElementById('filterPanel').classList.toggle('active');
+    });
+
+    document.getElementById('filterClose').addEventListener('click', () => {
+        document.getElementById('filterPanel').classList.remove('active');
+    });
+
+    document.getElementById('applyFilters').addEventListener('click', () => {
+        applyFilters();
+        document.getElementById('filterPanel').classList.remove('active');
+    });
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+        initMap();
+        loadFlats();
+    });
+</script>
+</body>
+</html>

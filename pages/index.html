@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlatRate - Bewerte deinen Vermieter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Work+Sans:wght@300;400;500;600&display=swap"
+          rel="stylesheet">
+    <link rel="icon" type="image/png" href="../img/logo.svg">
+</head>
+<body>
+<!-- HTML STRUKTUR -->
+<div class="page-wrapper">
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="logo-icon">
+                        <img src="../img/logo.svg" alt="FlatRate Logo" class="logo-image">
+                    </div>
+                    <div class="logo-text">
+                        <span class="logo-title">FlatRate</span>
+                        <span class="logo-subtitle">Bewerte deinen Vermieter</span>
+                    </div>
+                </div>
+                <nav class="nav">
+                    <a href="map.html" class="nav-link">Karte</a>
+                    <a href="login.html" class="nav-link">Login</a>
+                    <a href="add-flat.html" class="btn btn-primary">Wohnung bewerten</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="title-line">Vertrauen,</span>
+                    <span class="title-line">Wertvoll,</span>
+                    <span class="title-line">Einzigartig</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Transparenz für Mieter. Bewerte deine Wohnung und Vermieter,
+                    um anderen bei wichtigen Entscheidungen zu helfen.
+                </p>
+
+                <div class="search-wrapper">
+                    <div class="search-box">
+                        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                        <input
+                                type="text"
+                                class="search-input"
+                                placeholder="Adresse oder Stadt eingeben..."
+                                id="searchInput"
+                        >
+                        <button class="search-button" id="searchButton">
+                            Suchen
+                        </button>
+                    </div>
+                </div>
+
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-number" data-count="1247">0</div>
+                        <div class="stat-label">Bewertungen</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-count="523">0</div>
+                        <div class="stat-label">Wohnungen</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-count="892">0</div>
+                        <div class="stat-label">Nutzer</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-background">
+            <div class="jade-crystal"></div>
+            <div class="jade-crystal"></div>
+            <div class="jade-crystal"></div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Warum FlatRate?</h2>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                            <path d="M2 17l10 5 10-5"></path>
+                            <path d="M2 12l10 5 10-5"></path>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Transparenz</h3>
+                    <p class="feature-text">
+                        Ehrliche Bewertungen von echten Mietern.
+                        Treffe informierte Entscheidungen basierend auf Erfahrungen anderer.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                            <polyline points="7.5 4.21 12 6.81 16.5 4.21"></polyline>
+                            <polyline points="7.5 19.79 7.5 14.6 3 12"></polyline>
+                            <polyline points="21 12 16.5 14.6 16.5 19.79"></polyline>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Verlässlich</h3>
+                    <p class="feature-text">
+                        Verifizierte Bewertungen und ein sicheres System
+                        garantieren Authentizität und Vertrauen.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Community</h3>
+                    <p class="feature-text">
+                        Werde Teil einer wachsenden Gemeinschaft,
+                        die für faire Mietverhältnisse steht.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title">Teile deine Erfahrung</h2>
+                <p class="cta-text">
+                    Hilf anderen Mietern mit deiner ehrlichen Bewertung.
+                    Jede Stimme zählt für mehr Transparenz im Wohnungsmarkt.
+                </p>
+                <div class="cta-buttons">
+                    <a href="add-flat.html" class="btn btn-primary btn-large">
+                        Jetzt bewerten
+                    </a>
+                    <a href="map.html" class="btn btn-secondary btn-large">
+                        Bewertungen ansehen
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo-section">
+                        <div class="logo-icon small">
+                            <img src="../img/logo.svg" alt="FlatRate Logo" class="logo-image">
+                        </div>
+                        <span class="logo-title">FlatRate</span>
+                    </div>
+                    <p class="footer-tagline">Harmonie, Schutz, Ausgewogenheit</p>
+                </div>
+
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4 class="footer-heading">Navigation</h4>
+                        <a href="map.html">Karte</a>
+                        <a href="add-flat.html">Bewerten</a>
+                        <a href="login.html">Login</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4 class="footer-heading">Rechtliches</h4>
+                        <a href="#">Impressum</a>
+                        <a href="#">Datenschutz</a>
+                        <a href="#">AGB</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4 class="footer-heading">Kontakt</h4>
+                        <a href="#">Support</a>
+                        <a href="#">FAQ</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 FlatRate. Alle Rechte vorbehalten.</p>
+            </div>
+        </div>
+    </footer>
+</div>
+
+<style>
+    /* CSS - Design gemäß Moodboard "Jade" */
+
+    :root {
+        /* Jade Color Palette - from Moodboard */
+        --jade-dark: #0B3B3C;
+        --jade-primary: #1B5E5F;
+        --jade-medium: #2D7F7F;
+        --jade-light: #4FA09F;
+        --jade-mint: #7FC8C3;
+        --jade-pale: #A8D5D3;
+
+        /* Neutral Colors */
+        --anthracite: #2C3333;
+        --gray-dark: #3D4545;
+        --gray-medium: #5F6868;
+        --gray-light: #E8EFEF;
+        --white: #FFFFFF;
+        --off-white: #F8FAFA;
+
+        /* Typography */
+        --font-display: 'Playfair Display', serif;
+        --font-body: 'Work Sans', sans-serif;
+
+        /* Spacing */
+        --space-xs: 0.5rem;
+        --space-sm: 1rem;
+        --space-md: 2rem;
+        --space-lg: 4rem;
+        --space-xl: 6rem;
+
+        /* Shadows - soft and professional */
+        --shadow-sm: 0 2px 8px rgba(11, 59, 60, 0.08);
+        --shadow-md: 0 4px 16px rgba(11, 59, 60, 0.12);
+        --shadow-lg: 0 8px 32px rgba(11, 59, 60, 0.16);
+
+        /* Border Radius */
+        --radius-sm: 8px;
+        --radius-md: 12px;
+        --radius-lg: 20px;
+        --radius-xl: 32px;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        font-family: var(--font-body);
+        background: var(--off-white);
+        color: var(--anthracite);
+        line-height: 1.6;
+        overflow-x: hidden;
+    }
+
+    .page-wrapper {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 var(--space-md);
+    }
+
+    /* Header */
+    .header {
+        background: var(--jade-dark);
+        padding: var(--space-md) 0;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: var(--shadow-md);
+        animation: slideDown 0.6s ease-out;
+    }
+
+    @keyframes slideDown {
+        from {
+            transform: translateY(-100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo-section {
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+    }
+
+    .logo-icon {
+        width: 50px;
+        height: 50px;
+        color: var(--jade-mint);
+        transition: transform 0.3s ease;
+    }
+
+    .logo-icon:hover {
+        transform: rotate(90deg) scale(1.1);
+    }
+
+    .logo-icon.small {
+        width: 40px;
+        height: 40px;
+    }
+
+    .logo-text {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .logo-title {
+        font-family: var(--font-display);
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--jade-mint);
+        line-height: 1;
+    }
+
+    .logo-subtitle {
+        font-size: 0.75rem;
+        color: var(--jade-pale);
+        font-weight: 300;
+    }
+
+    .nav {
+        display: flex;
+        gap: var(--space-md);
+        align-items: center;
+    }
+
+    .nav-link {
+        color: var(--jade-pale);
+        text-decoration: none;
+        font-weight: 400;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--jade-mint);
+        transition: width 0.3s ease;
+    }
+
+    .nav-link:hover {
+        color: var(--jade-mint);
+    }
+
+    .nav-link:hover::after {
+        width: 100%;
+    }
+
+    /* Buttons */
+    .btn {
+        padding: 0.75rem 1.5rem;
+        border-radius: var(--radius-md);
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        display: inline-block;
+        border: none;
+        cursor: pointer;
+        font-family: var(--font-body);
+    }
+
+    .btn-primary {
+        background: var(--jade-medium);
+        color: var(--white);
+        box-shadow: var(--shadow-sm);
+    }
+
+    .btn-primary:hover {
+        background: var(--jade-primary);
+        box-shadow: var(--shadow-md);
+        transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+        background: transparent;
+        color: var(--jade-dark);
+        border: 2px solid var(--jade-dark);
+    }
+
+    .btn-secondary:hover {
+        background: var(--jade-dark);
+        color: var(--white);
+        transform: translateY(-2px);
+    }
+
+    .btn-large {
+        padding: 1rem 2.5rem;
+        font-size: 1.1rem;
+    }
+
+    /* Hero Section */
+    .hero {
+        position: relative;
+        padding: var(--space-xl) 0;
+        overflow: hidden;
+        background: linear-gradient(135deg, var(--jade-dark) 0%, var(--jade-primary) 100%);
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 10;
+        animation: fadeInUp 0.8s ease-out 0.2s backwards;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .hero-title {
+        font-family: var(--font-display);
+        font-size: 4rem;
+        font-weight: 700;
+        color: var(--white);
+        margin-bottom: var(--space-md);
+        line-height: 1.1;
+    }
+
+    .title-line {
+        display: block;
+        animation: fadeInLeft 0.8s ease-out backwards;
+    }
+
+    .title-line:nth-child(1) {
+        animation-delay: 0.3s;
+    }
+
+    .title-line:nth-child(2) {
+        animation-delay: 0.5s;
+    }
+
+    .title-line:nth-child(3) {
+        animation-delay: 0.7s;
+    }
+
+    @keyframes fadeInLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    .hero-subtitle {
+        font-size: 1.25rem;
+        color: var(--jade-pale);
+        max-width: 600px;
+        margin-bottom: var(--space-lg);
+        font-weight: 300;
+        line-height: 1.8;
+    }
+
+    /* Search Box */
+    .search-wrapper {
+        margin-bottom: var(--space-lg);
+        animation: fadeInUp 0.8s ease-out 0.9s backwards;
+    }
+
+    .search-box {
+        background: var(--white);
+        border-radius: var(--radius-lg);
+        padding: var(--space-xs);
+        display: flex;
+        align-items: center;
+        max-width: 700px;
+        box-shadow: var(--shadow-lg);
+        transition: transform 0.3s ease;
+    }
+
+    .search-box:focus-within {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 40px rgba(11, 59, 60, 0.2);
+    }
+
+    .search-icon {
+        width: 24px;
+        height: 24px;
+        color: var(--gray-medium);
+        margin: 0 var(--space-sm);
+        stroke-width: 2;
+    }
+
+    .search-input {
+        flex: 1;
+        border: none;
+        outline: none;
+        font-size: 1rem;
+        font-family: var(--font-body);
+        color: var(--anthracite);
+        padding: var(--space-sm);
+    }
+
+    .search-input::placeholder {
+        color: var(--gray-medium);
+    }
+
+    .search-button {
+        background: var(--jade-medium);
+        color: var(--white);
+        border: none;
+        padding: 0.875rem 2rem;
+        border-radius: var(--radius-md);
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: var(--font-body);
+    }
+
+    .search-button:hover {
+        background: var(--jade-primary);
+        transform: scale(1.05);
+    }
+
+    /* Hero Stats */
+    .hero-stats {
+        display: flex;
+        gap: var(--space-lg);
+        animation: fadeInUp 0.8s ease-out 1.1s backwards;
+    }
+
+    .stat-item {
+        text-align: center;
+    }
+
+    .stat-number {
+        font-family: var(--font-display);
+        font-size: 3rem;
+        font-weight: 700;
+        color: var(--jade-mint);
+        line-height: 1;
+        margin-bottom: var(--space-xs);
+    }
+
+    .stat-label {
+        color: var(--jade-pale);
+        font-size: 0.875rem;
+        font-weight: 300;
+    }
+
+    /* Hero Background - Jade Crystals */
+    .hero-background {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 50%;
+        pointer-events: none;
+        overflow: hidden;
+    }
+
+    .jade-crystal {
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(circle at 30% 30%, var(--jade-mint), var(--jade-medium));
+        opacity: 0.1;
+        border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+        animation: float 20s ease-in-out infinite;
+    }
+
+    .jade-crystal:nth-child(1) {
+        top: 10%;
+        right: 10%;
+        animation-delay: 0s;
+    }
+
+    .jade-crystal:nth-child(2) {
+        top: 50%;
+        right: 30%;
+        animation-delay: -7s;
+        width: 200px;
+        height: 200px;
+    }
+
+    .jade-crystal:nth-child(3) {
+        bottom: 10%;
+        right: 5%;
+        animation-delay: -14s;
+        width: 250px;
+        height: 250px;
+    }
+
+    @keyframes float {
+        0%, 100% {
+            transform: translate(0, 0) rotate(0deg);
+        }
+        33% {
+            transform: translate(30px, -30px) rotate(120deg);
+        }
+        66% {
+            transform: translate(-20px, 20px) rotate(240deg);
+        }
+    }
+
+    /* Features Section */
+    .features {
+        padding: var(--space-xl) 0;
+        background: var(--white);
+    }
+
+    .section-title {
+        font-family: var(--font-display);
+        font-size: 2.5rem;
+        color: var(--jade-dark);
+        text-align: center;
+        margin-bottom: var(--space-lg);
+    }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: var(--space-md);
+    }
+
+    .feature-card {
+        background: var(--gray-light);
+        padding: var(--space-lg);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-sm);
+        transition: all 0.4s ease;
+        opacity: 0;
+        transform: translateY(30px);
+        animation: fadeInUp 0.6s ease-out forwards;
+    }
+
+    .feature-card:nth-child(1) {
+        animation-delay: 0.2s;
+    }
+
+    .feature-card:nth-child(2) {
+        animation-delay: 0.4s;
+    }
+
+    .feature-card:nth-child(3) {
+        animation-delay: 0.6s;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .feature-icon {
+        width: 60px;
+        height: 60px;
+        background: var(--jade-medium);
+        border-radius: var(--radius-md);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: var(--space-md);
+        color: var(--white);
+        transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover .feature-icon {
+        transform: scale(1.1) rotate(5deg);
+    }
+
+    .feature-icon svg {
+        width: 32px;
+        height: 32px;
+        stroke-width: 2;
+    }
+
+    .feature-title {
+        font-family: var(--font-display);
+        font-size: 1.5rem;
+        color: var(--jade-dark);
+        margin-bottom: var(--space-sm);
+    }
+
+    .feature-text {
+        color: var(--gray-dark);
+        line-height: 1.7;
+    }
+
+    /* CTA Section */
+    .cta {
+        padding: var(--space-xl) 0;
+        background: linear-gradient(135deg, var(--jade-medium) 0%, var(--jade-dark) 100%);
+        text-align: center;
+    }
+
+    .cta-content {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .cta-title {
+        font-family: var(--font-display);
+        font-size: 3rem;
+        color: var(--white);
+        margin-bottom: var(--space-md);
+    }
+
+    .cta-text {
+        font-size: 1.25rem;
+        color: var(--jade-pale);
+        margin-bottom: var(--space-lg);
+        line-height: 1.8;
+    }
+
+    .cta-buttons {
+        display: flex;
+        gap: var(--space-md);
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    /* Footer */
+    .footer {
+        background: var(--anthracite);
+        color: var(--jade-pale);
+        padding: var(--space-lg) 0 var(--space-md);
+        margin-top: auto;
+    }
+
+    .footer-content {
+        display: grid;
+        grid-template-columns: 2fr 3fr;
+        gap: var(--space-lg);
+        margin-bottom: var(--space-lg);
+    }
+
+    .footer-tagline {
+        color: var(--gray-medium);
+        margin-top: var(--space-sm);
+        font-size: 0.875rem;
+    }
+
+    .footer-links {
+        display: flex;
+        gap: var(--space-lg);
+        justify-content: flex-end;
+    }
+
+    .footer-column {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-xs);
+    }
+
+    .footer-heading {
+        color: var(--jade-mint);
+        font-weight: 600;
+        margin-bottom: var(--space-xs);
+        font-size: 0.875rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .footer-column a {
+        color: var(--jade-pale);
+        text-decoration: none;
+        font-size: 0.875rem;
+        transition: color 0.3s ease;
+    }
+
+    .footer-column a:hover {
+        color: var(--jade-mint);
+    }
+
+    .footer-bottom {
+        border-top: 1px solid var(--gray-dark);
+        padding-top: var(--space-md);
+        text-align: center;
+        color: var(--gray-medium);
+        font-size: 0.875rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2.5rem;
+        }
+
+        .hero-stats {
+            flex-direction: column;
+            gap: var(--space-md);
+        }
+
+        .nav {
+            flex-direction: column;
+            gap: var(--space-sm);
+        }
+
+        .features-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .cta-title {
+            font-size: 2rem;
+        }
+
+        .footer-content {
+            grid-template-columns: 1fr;
+        }
+
+        .footer-links {
+            justify-content: flex-start;
+        }
+    }
+</style>
+
+<script>
+    /* JavaScript - Logik & Platzhalter für Backend */
+
+    // DATABASE CONNECTION (Placeholder)
+    const API_URL = 'http://localhost:3000/api';
+
+    // Counter Animation for Stats
+    function animateCounter(element, target, duration = 2000) {
+        const start = 0;
+        const increment = target / (duration / 16);
+        let current = start;
+
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+                element.textContent = target;
+                clearInterval(timer);
+            } else {
+                element.textContent = Math.floor(current);
+            }
+        }, 16);
+    }
+
+    // Initialize counter animations when visible
+    function initCounters() {
+        const statNumbers = document.querySelectorAll('.stat-number');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const target = parseInt(entry.target.dataset.count);
+                    animateCounter(entry.target, target);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {threshold: 0.5});
+
+        statNumbers.forEach(stat => observer.observe(stat));
+    }
+
+    // Search Functionality
+    const searchButton = document.getElementById('searchButton');
+    const searchInput = document.getElementById('searchInput');
+
+    searchButton.addEventListener('click', handleSearch);
+    searchInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            handleSearch();
+        }
+    });
+
+    function handleSearch() {
+        const query = searchInput.value.trim();
+
+        if (!query) {
+            alert('Bitte gib eine Adresse oder Stadt ein.');
+            return;
+        }
+
+        // Redirect to map page with search query
+        window.location.href = `map.html?search=${encodeURIComponent(query)}`;
+
+        // FUTURE DATABASE LOGIC:
+        // fetch(`${API_URL}/search?q=${encodeURIComponent(query)}`)
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         // Handle search results
+        //     })
+        //     .catch(error => console.error('Search error:', error));
+    }
+
+    // Load Statistics from Database
+    async function loadStatistics() {
+        try {
+            // FUTURE DATABASE LOGIC:
+            // const response = await fetch(`${API_URL}/statistics`);
+            // const data = await response.json();
+            //
+            // Update stat counters with real data:
+            // document.querySelector('[data-count="1247"]').dataset.count = data.totalRatings;
+            // document.querySelector('[data-count="523"]').dataset.count = data.totalFlats;
+            // document.querySelector('[data-count="892"]').dataset.count = data.totalUsers;
+
+            console.log('Statistics loaded (placeholder)');
+        } catch (error) {
+            console.error('Error loading statistics:', error);
+        }
+    }
+
+    // Check User Authentication Status
+    function checkAuthStatus() {
+        const token = localStorage.getItem('authToken');
+
+        if (token) {
+            // FUTURE DATABASE LOGIC:
+            // Validate token with backend
+            // fetch(`${API_URL}/auth/validate`, {
+            //     headers: { 'Authorization': `Bearer ${token}` }
+            // })
+            // .then(response => response.json())
+            // .then(data => {
+            //     if (data.valid) {
+            //         updateNavForLoggedInUser(data.user);
+            //     }
+            // });
+
+            console.log('User authenticated (placeholder)');
+        }
+    }
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        initCounters();
+        loadStatistics();
+        checkAuthStatus();
+
+        // Add smooth scroll behavior
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({behavior: 'smooth', block: 'start'});
+                }
+            });
+        });
+    });
+
+    // Database Connection Helper Functions (Placeholders)
+    const DatabaseHelper = {
+        // Connect to accounts database
+        async connectAccountsDB() {
+            // Connection to flatrate_accounts database
+            console.log('Connecting to accounts database...');
+        },
+
+        // Connect to ratings database
+        async connectRatingsDB() {
+            // Connection to flatrate_ratings database
+            console.log('Connecting to ratings database...');
+        },
+
+        // Query helper
+        async query(database, sql, params) {
+            // Execute SQL query
+            console.log(`Query on ${database}:`, sql, params);
+        }
+    };
+</script>
+</body>
+</html>

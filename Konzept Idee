@@ -1,0 +1,556 @@
+1. Projektübersicht
+
+Erstelle einen Frontend-Prototyp für die Website:
+
+FlatRate – Bewerte deinen Vermieter
+
+Die Website dient dazu, Wohnungen und Vermieter zu bewerten.
+Nutzer besitzen Profile, können Bewertungen abgeben, Wohnungen hinzufügen und verwalten.
+Es existiert zusätzlich ein Admin-Bereich zur Nutzer- und Inhaltsverwaltung.
+
+Ein Moodboard („Jade“) wird mitgeschickt und ist verbindlich für Design, Farben und Stil.
+
+2. Technische Grundvorgaben
+2.1 Technologie
+
+HTML als Basis
+
+Kein Framework
+
+Kein React
+
+Kein CSS-Framework
+
+Reines Vanilla HTML / CSS / JavaScript
+
+2.2 Trennung innerhalb jeder Datei (PFLICHT)
+
+In jeder HTML-Datei:
+
+<!-- HTML STRUKTUR -->
+
+<style>
+/* CSS – Design gemäß Moodboard */
+</style>
+
+<script>
+/* JavaScript – Logik & Platzhalter für Backend */
+</script>
+
+3. Seitenstruktur (jede Seite eigene HTML-Datei)
+/index.html           → Landing Page
+/map.html             → Karten- & Listenansicht
+/flat.html            → Wohnungsdetail
+/add-flat.html        → Wohnung hinzufügen
+/login.html           → Login / Registrierung
+/profile.html         → Nutzerprofil
+/admin-login.html     → Admin-Zusatz-Login
+/admin.html           → Admin-Dashboard
+
+4. Designvorgaben (Moodboard „Jade“ – verbindlich)
+4.1 Farb- & Stilwelt
+
+Dunkles Jadegrün für Header & wichtige Flächen
+
+Gedämpfte Grün- und Minttöne für Akzente
+
+Dunkle, matte Cards (Anthrazit / Grau-Grün)
+
+Weiß / Off-White für Hintergründe
+
+Weiche Schatten
+
+Abgerundete Cards
+
+❗ Keine knalligen Farben
+❗ Keine aggressive Signalfarbe für schlechte Bewertungen
+❗ Ruhig, seriös, vertrauenswürdig
+
+5. Datenbank-Logik (KONZEPTUELL, NICHT IMPLEMENTIERT)
+
+Die HTML-Seiten müssen strukturell so aufgebaut sein, dass sie später problemlos an ein Backend mit Datenbank angebunden werden können.
+
+5.1 Benötigte Datenbank-Bereiche
+
+Nutzer (User)
+
+Wohnungen
+
+Bewertungen
+
+Admin-Account
+
+Statistiken
+
+Die KI soll:
+
+Formulare
+
+Buttons
+
+JS-Platzhalter
+
+Kommentare im Code
+
+so vorbereiten, dass klar ist:
+👉 Hier kommt später die Datenbank-Logik rein
+
+6. Seiten-Logik im Detail
+6.1 index.html – Landing Page
+
+Logo + Claim
+
+Suchfeld (Adresse / Stadt)
+
+CTA: „Wohnung bewerten“
+
+Kurzbeschreibung des Konzepts
+
+Vertrauensaufbau
+
+6.2 map.html – Karten- & Listenansicht
+
+Zwei Hauptbereiche:
+
+Wohnungsliste (Cards)
+
+Karten-Platzhalter
+
+Jede Card:
+
+Adresse
+
+Durchschnittsbewertung
+
+Klick → Weiterleitung zu flat.html
+
+6.3 flat.html – Wohnungsdetail
+
+Adresse
+
+Durchschnittsbewertung
+
+Liste von Bewertungen
+
+Button „Bewertung abgeben“
+
+Bewertungsformular (nur UI)
+
+6.4 add-flat.html – Wohnung hinzufügen
+
+Formular:
+
+Adresse
+
+Bewertungsfelder
+
+Kommentar
+
+JS-Platzhalter für spätere DB-Anbindung
+
+6.5 login.html – Login / Registrierung
+
+Login-Form
+
+Registrierungs-Form
+
+Umschaltbar per Button
+
+JS-Platzhalter:
+
+User-Auth
+
+Rollenprüfung (User / Admin)
+
+6.6 profile.html – Nutzerprofil
+
+Benutzername
+
+Eigene Bewertungen
+
+Hinzugefügte Wohnungen
+
+Logout-Button
+
+6.7 admin-login.html – Zusätzliche Sicherheit
+
+Zweite Passwortabfrage
+
+Nur für Admin-Accounts
+
+Weiterleitung zu admin.html
+
+6.8 admin.html – Admin-Dashboard
+
+Übersicht:
+
+Anzahl Nutzer
+
+Anzahl Bewertungen
+
+Neue Einträge
+
+Nutzerverwaltung:
+
+Accounts anzeigen
+
+Sperren / Löschen (UI)
+
+Bewertungsübersicht
+
+Statistik-Sektion (Platzhalter)
+
+7. JavaScript-Anforderungen
+
+JavaScript soll:
+
+UI-Interaktionen steuern
+
+Navigation simulieren
+
+Formularvalidierung durchführen
+
+Platzhalter für:
+
+Datenbank-Requests
+
+Login-Status
+
+Rollenprüfung (Admin/User)
+
+❗ Kein echtes Backend
+❗ Aber logisch realistisch vorbereitet
+
+8. Ziel des Ergebnisses
+
+Das Ergebnis soll:
+
+Ein realistischer, professioneller Prototyp sein
+
+Visuell exakt zum Moodboard passen
+
+Technisch so aufgebaut sein, dass:
+👉 ein Backend + Datenbank später problemlos ergänzt werden kann
+
+9. Wichtigste Prioritäten
+
+Design strikt nach Moodboard
+
+HTML-first, kein Framework
+
+Mehrere HTML-Dateien
+
+Vorbereitung für Datenbank & Auth
+
+Admin-System logisch korrekt
+
+Beginne jetzt mit der Umsetzung aller HTML-Dateien gemäß dieser Vorgaben.
+
+Wenn du möchtest, kann ich als Nächstes:
+
+diese Anweisung noch weiter kürzen
+
+sie für eine bestimmte KI optimieren
+
+oder mit dir die spätere Datenbankstruktur + Backend-API sauber planen
+
+Sag einfach, was dein nächster Schritt ist.
+
+Die KI soll die datenbak gleich mit anbinden und es soll zwei datenbanken geben. Zum einen eine für die bewertungen und zum einen eine für die accounts der user in welchem auch der admin account liegt
+
+Perfekt, jetzt ist der Rahmen klar, technisch korrekt und umsetzbar.
+Ich schreibe dir eine finale, saubere und eindeutige ANWEISUNG, die du direkt einer anderen KI geben kannst, damit sie:
+
+die Website in HTML erstellt
+
+HTML / CSS / JS sauber getrennt (innerhalb jeder Datei)
+
+mehrere HTML-Dateien erzeugt
+
+Datenbankanbindung DIREKT einplant und umsetzt
+
+ZWEI Datenbanken verwendet
+
+User- & Admin-Accounts korrekt behandelt
+
+Admin-Bereich mit zusätzlicher Passwortabfrage umsetzt
+
+sich strikt am Moodboard „Jade“ orientiert
+
+Das ist kein Overkill, sondern exakt das, was du brauchst.
+
+✅ FINALE ANWEISUNG FÜR DIE WEBSITE-GENERIERENDE KI
+1. Projektbeschreibung
+
+Erstelle eine vollständige Webanwendung mit dem Namen:
+
+FlatRate – Bewerte deinen Vermieter
+
+Die Website ermöglicht es Nutzern:
+
+Wohnungen zu bewerten
+
+Wohnungen hinzuzufügen
+
+Profile zu besitzen
+
+Bewertungen anderer Nutzer einzusehen
+
+Zusätzlich existiert ein Admin-System zur Verwaltung von Nutzern, Bewertungen und Statistiken.
+
+Ein Moodboard („Jade“) wird mitgeschickt und ist verbindlich für Design, Farben, Typografie und UI-Stil.
+
+2. Technische Grundvorgaben
+2.1 Frontend
+
+HTML als Seitenstruktur
+
+Kein Framework
+
+Kein React
+
+Kein CSS-Framework
+
+Vanilla HTML / CSS / JavaScript
+
+2.2 Trennung innerhalb jeder HTML-Datei (PFLICHT)
+<!-- HTML -->
+
+<style>
+/* CSS */
+</style>
+
+<script>
+/* JavaScript */
+</script>
+
+3. Seitenstruktur (jede Seite eigene HTML-Datei)
+/index.html           → Landing Page
+/map.html             → Karten- & Listenansicht
+/flat.html            → Wohnungsdetail
+/add-flat.html        → Wohnung hinzufügen
+/login.html           → Login / Registrierung
+/profile.html         → Nutzerprofil
+/admin-login.html     → Admin-Zweit-Login
+/admin.html           → Admin-Dashboard
+
+
+Alle Seiten:
+
+Einheitliches Design
+
+Gemeinsame Farbwelt
+
+Wiederverwendbare UI-Elemente
+
+4. Designvorgaben (Moodboard „Jade“ – VERBINDLICH)
+
+Dunkles Jadegrün für Header, Footer, Fokusbereiche
+
+Gedämpfte Grün- & Minttöne für Akzente
+
+Dunkle, matte Cards (Anthrazit / Grün-Grau)
+
+Weiße / Off-White Hintergründe
+
+Abgerundete Cards
+
+Weiche Schatten
+
+Ruhige, seriöse Optik
+
+❗ Keine knalligen Farben
+❗ Keine aggressive Darstellung negativer Bewertungen
+❗ Keine Emojis
+
+5. Datenbank-Anforderungen (SEHR WICHTIG)
+❗ Es müssen ZWEI getrennte Datenbanken verwendet werden:
+5.1 Datenbank 1: Accounts-Datenbank
+
+Zweck:
+Speichert alle Nutzerkonten inklusive Admin-Accounts.
+
+Mindesttabellen:
+
+users
+
+roles (user / admin)
+
+users (Beispielstruktur):
+
+id
+
+username
+
+email
+
+password_hash
+
+role (user | admin)
+
+created_at
+
+is_active
+
+➡️ Admin-Account liegt in dieser Datenbank
+
+5.2 Datenbank 2: Bewertungs-Datenbank
+
+Zweck:
+Speichert Wohnungen und Bewertungen.
+
+Mindesttabellen:
+
+flats
+
+ratings
+
+flats:
+
+id
+
+address
+
+city
+
+latitude
+
+longitude
+
+created_by (user_id)
+
+ratings:
+
+id
+
+flat_id
+
+user_id
+
+rating_overall
+
+rating_condition
+
+rating_communication
+
+rating_costs
+
+comment
+
+created_at
+
+6. Backend- & Anbindungslogik (MUSS VORBEREITET SEIN)
+
+Die KI soll:
+
+eine reale Datenbankanbindung implementieren (z. B. MySQL / PostgreSQL)
+
+SQL-Struktur oder Initialisierung bereitstellen
+
+fetch / AJAX aus JavaScript verwenden
+
+Authentifizierung logisch korrekt umsetzen
+
+❗ Kein Framework, aber echte DB-Verbindungen, nicht nur Dummys.
+
+7. Authentifizierungs- & Rollenlogik
+Login:
+
+Prüfung gegen Accounts-Datenbank
+
+Passwort-Hashing
+
+Session oder Token-Logik
+
+Rollen:
+
+user → normale Seiten
+
+admin → Zugriff auf Admin-Bereich
+
+8. Admin-Sicherheit (ZWEI-STUFIG)
+Stufe 1
+
+Admin loggt sich normal über login.html ein
+
+Stufe 2
+
+Weiterleitung zu admin-login.html
+
+Zweite Passwortabfrage
+
+Erst danach Zugriff auf admin.html
+
+9. Admin-Dashboard (admin.html)
+
+Muss enthalten:
+
+Übersicht:
+
+Anzahl Nutzer
+
+Anzahl Wohnungen
+
+Anzahl Bewertungen
+
+Nutzerverwaltung:
+
+Accounts anzeigen
+
+Aktivieren / Deaktivieren
+
+Bewertungsübersicht
+
+Statistikbereich (Diagramm-Platzhalter)
+
+10. JavaScript-Anforderungen
+
+JavaScript soll:
+
+Formulare an Backend senden
+
+Daten aus Datenbanken laden
+
+Login-Status prüfen
+
+Rollenlogik umsetzen
+
+Admin-Zugriff absichern
+
+11. Kartenansicht
+
+Kartenbereich als UI-Komponente
+
+Marker basierend auf Wohnungsdaten
+
+Bewertung farblich codiert (jade-basiert)
+
+Keine aggressive Signalfarbe
+
+12. Ziel des Ergebnisses
+
+Das Ergebnis soll:
+
+Eine funktionsfähige Webanwendung sein
+
+HTML-basiert
+
+Mit realer Datenbankanbindung
+
+Mit sauberer Trennung von Struktur, Design & Logik
+
+Mit Admin-System
+
+Optisch exakt am Moodboard orientiert
+
+13. Höchste Prioritäten
+
+Zwei getrennte Datenbanken
+
+Admin + User sauber getrennt
+
+HTML-first, kein Framework
+
+Moodboard strikt einhalten
+
+Realistische, saubere Architektur
