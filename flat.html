@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wohnungsdetails - FlatRate</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- HTML STRUKTUR -->
+    <div class="page-wrapper">
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <div class="header-content">
+                    <a href="index.html" class="logo-section">
+                        <div class="logo-icon">
+                            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M30 20 L30 40 L20 40 L20 60 L40 60 L40 50" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M70 20 L70 40 L80 40 L80 60 L60 60 L60 50" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M50 60 L50 80 L40 80 L40 100" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M50 60 L50 80 L60 80 L60 100" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="logo-text">
+                            <span class="logo-title">FlatRate</span>
+                            <span class="logo-subtitle">Bewerte deinen Vermieter</span>
+                        </div>
+                    </a>
+                    <nav class="nav">
+                        <a href="map.html" class="nav-link">Karte</a>
+                        <a href="login.html" class="nav-link">Login</a>
+                        <a href="add-flat.html" class="btn btn-primary">Wohnung bewerten</a>
+                    </nav>
+                </div>
+            </div>
+        </header>
+
+        <!-- Loading State -->
+        <div class="loading-container" id="loadingContainer">
+            <div class="loading-spinner"></div>
+            <p>Wohnungsdaten werden geladen...</p>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content" id="mainContent" style="display: none;">
+            <div class="container-large">
+                <!-- Back Button -->
+                <div class="back-section">
+                    <a href="map.html" class="back-link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M19 12H5M12 19l-7-7 7-7"/>
+                        </svg>
+                        Zurück zur Karte
+                    </a>
+                </div>
+
+                <!-- Flat Hero Section -->
+                <section class="flat-hero" id="flatHero">
+                    <!-- Wird dynamisch gefüllt -->
+                </section>
+
+                <!-- Two Column Layout -->
+                <div class="content-grid">
+                    <!-- Left Column - Details & Images -->
+                    <div class="left-column">
+                        <!-- Image Gallery -->
+                        <section class="image-gallery" id="imageGallery">
+                            <h2 class="section-title">Bilder</h2>
+                            <div class="gallery-container" id="galleryContainer">
+                                <!-- Wird dynamisch gefüllt -->
+                            </div>
+                        </section>
+
+                        <!-- Description -->
+                        <section class="description-section" id="descriptionSection">
+                            <h2 class="section-title">Beschreibung</h2>
+                            <div class="description-content" id="descriptionContent">
+                                <!-- Wird dynamisch gefüllt -->
+                            </div>
+                        </section>
+
+                        <!-- Rating Breakdown -->
+                        <section class="rating-breakdown" id="ratingBreakdown">
+                            <h2 class="section-title">Bewertungsdetails</h2>
+                            <div class="rating-bars" id="ratingBars">
+                                <!-- Wird dynamisch gefüllt -->
+                            </div>
+                        </section>
+                    </div>
+
+                    <!-- Right Column - Reviews -->
+                    <div class="right-column">
+                        <!-- Add Review Button -->
+                        <div class="add-review-section">
+                            <button class="btn btn-primary btn-large" id="addReviewBtn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M12 5v14M5 12h14"/>
+                                </svg>
+                                Bewertung hinzufügen
+                            </button>
+                        </div>
+
+                        <!-- Reviews List -->
+                        <section class="reviews-section">
+                            <h2 class="section-title">Bewertungen (<span id="reviewCount">0</span>)</h2>
+                            <div class="reviews-container" id="reviewsContainer">
+                                <!-- Wird dynamisch gefüllt -->
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Error State -->
+        <div class="error-container" id="errorContainer" style="display: none;">
+            <div class="error-content">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+                <h2>Wohnung nicht gefunden</h2>
+                <p>Die gesuchte Wohnung existiert nicht oder wurde entfernt.</p>
+                <a href="map.html" class="btn btn-primary">Zurück zur Karte</a>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* CSS - Design gemäß Moodboard "Jade" */
+
+        :root {
+            --jade-dark: #0B3B3C;
+            --jade-primary: #1B5E5F;
+            --jade-medium: #2D7F7F;
+            --jade-light: #4FA09F;
+            --jade-mint: #7FC8C3;
+            --jade-pale: #A8D5D3;
+
+            --anthracite: #2C3333;
+            --gray-dark: #3D4545;
+            --gray-medium: #5F6868;
+            --gray-light: #E8EFEF;
+            --white: #FFFFFF;
+            --off-white: #F8FAFA;
+
+            --font-display: 'Playfair Display', serif;
+            --font-body: 'Work Sans', sans-serif;
+
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 2rem;
+            --space-lg: 4rem;
+            --space-xl: 6rem;
+
+            --shadow-sm: 0 2px 8px rgba(11, 59, 60, 0.08);
+            --shadow-md: 0 4px 16px rgba(11, 59, 60, 0.12);
+            --shadow-lg: 0 8px 32px rgba(11, 59, 60, 0.16);
+
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --radius-xl: 32px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--off-white);
+            color: var(--anthracite);
+            line-height: 1.6;
+        }
+
+        .page-wrapper {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            background: var(--jade-dark);
+            padding: var(--space-sm) 0;
+            box-shadow: var(--shadow-md);
+            z-index: 1000;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-md);
+        }
+
+        .container-large {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 var(--space-md);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            color: var(--jade-mint);
+            transition: transform 0.3s ease;
+        }
+
+        .logo-section:hover .logo-icon {
+            transform: rotate(90deg) scale(1.1);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-title {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--jade-mint);
+            line-height: 1;
+        }
+
+        .logo-subtitle {
+            font-size: 0.7rem;
+            color: var(--jade-pale);
+            font-weight: 300;
+        }
+
+        .nav {
+            display: flex;
+            gap: var(--space-md);
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--jade-pale);
+            text-decoration: none;
+            font-weight: 400;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--jade-mint);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--jade-mint);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .btn {
+            padding: 0.625rem 1.25rem;
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+        }
+
+        .btn svg {
+            width: 18px;
+            height: 18px;
+            stroke-width: 2;
+        }
+
+        .btn-primary {
+            background: var(--jade-medium);
+            color: var(--white);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-primary:hover {
+            background: var(--jade-primary);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .btn-large {
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            width: 100%;
+            justify-content: center;
+        }
+
+        /* Loading */
+        .loading-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 60vh;
+            gap: var(--space-md);
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid var(--gray-light);
+            border-top-color: var(--jade-medium);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-container p {
+            color: var(--jade-dark);
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+
+        /* Error */
+        .error-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 60vh;
+            padding: var(--space-lg);
+        }
+
+        .error-content {
+            text-align: center;
+            max-width: 500px;
+        }
+
+        .error-content svg {
+            width: 80px;
+            height: 80px;
+            stroke-width: 2;
+            color: var(--gray-medium);
+            margin-bottom: var(--space-md);
+        }
+
+        .error-content h2 {
+            font-family: var(--font-display);
+            color: var(--jade-dark);
+            font-size: 2rem;
+            margin-bottom: var(--space-sm);
+        }
+
+        .error-content p {
+            color: var(--gray-dark);
+            margin-bottom: var(--space-lg);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: var(--space-lg) 0;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Back Section */
+        .back-section {
+            margin-bottom: var(--space-md);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            color: var(--jade-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-link svg {
+            width: 20px;
+            height: 20px;
+            stroke-width: 2;
+        }
+
+        .back-link:hover {
+            color: var(--jade-medium);
+            transform: translateX(-4px);
+        }
+
+        /* Flat Hero */
+        .flat-hero {
+            background: var(--white);
+            padding: var(--space-lg);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            margin-bottom: var(--space-lg);
+        }
+
+        .hero-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: var(--space-md);
+        }
+
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            color: var(--jade-dark);
+            margin-bottom: var(--space-xs);
+        }
+
+        .hero-address {
+            color: var(--gray-medium);
+            font-size: 1.1rem;
+        }
+
+        .hero-rating {
+            text-align: right;
+        }
+
+        .rating-number {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--jade-medium);
+            line-height: 1;
+        }
+
+        .rating-stars {
+            color: var(--jade-medium);
+            font-size: 1.5rem;
+            margin-bottom: var(--space-xs);
+        }
+
+        .rating-count {
+            color: var(--gray-medium);
+            font-size: 0.9rem;
+        }
+
+        .hero-meta {
+            display: flex;
+            gap: var(--space-lg);
+            padding-top: var(--space-md);
+            border-top: 1px solid var(--gray-light);
+        }
+
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .meta-label {
+            color: var(--gray-medium);
+            font-size: 0.85rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .meta-value {
+            color: var(--jade-dark);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: var(--space-lg);
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            color: var(--jade-dark);
+            margin-bottom: var(--space-md);
+        }
+
+        /* Image Gallery */
+        .image-gallery {
+            background: var(--white);
+            padding: var(--space-lg);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: var(--space-md);
+        }
+
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: var(--space-sm);
+        }
+
+        .gallery-image {
+            width: 100%;
+            aspect-ratio: 4/3;
+            object-fit: cover;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-image:hover {
+            transform: scale(1.05);
+        }
+
+        .no-images {
+            text-align: center;
+            padding: var(--space-lg);
+            color: var(--gray-medium);
+        }
+
+        /* Description */
+        .description-section {
+            background: var(--white);
+            padding: var(--space-lg);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: var(--space-md);
+        }
+
+        .description-content {
+            color: var(--gray-dark);
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+
+        /* Rating Breakdown */
+        .rating-breakdown {
+            background: var(--white);
+            padding: var(--space-lg);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .rating-bar-item {
+            margin-bottom: var(--space-md);
+        }
+
+        .rating-bar-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--space-xs);
+        }
+
+        .rating-bar-label {
+            font-weight: 500;
+            color: var(--jade-dark);
+        }
+
+        .rating-bar-value {
+            font-weight: 600;
+            color: var(--jade-medium);
+        }
+
+        .rating-bar-bg {
+            height: 10px;
+            background: var(--gray-light);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .rating-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--jade-medium), var(--jade-light));
+            border-radius: 5px;
+            transition: width 0.6s ease;
+        }
+
+        /* Reviews */
+        .add-review-section {
+            margin-bottom: var(--space-md);
+        }
+
+        .reviews-section {
+            background: var(--white);
+            padding: var(--space-lg);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .reviews-container {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+        }
+
+        .review-card {
+            padding: var(--space-md);
+            background: var(--off-white);
+            border-radius: var(--radius-md);
+            border-left: 4px solid var(--jade-medium);
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-sm);
+        }
+
+        .review-author {
+            font-weight: 600;
+            color: var(--jade-dark);
+        }
+
+        .review-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            color: var(--jade-medium);
+            font-weight: 600;
+        }
+
+        .review-date {
+            color: var(--gray-medium);
+            font-size: 0.85rem;
+            margin-bottom: var(--space-sm);
+        }
+
+        .review-comment {
+            color: var(--gray-dark);
+            line-height: 1.6;
+        }
+
+        .no-reviews {
+            text-align: center;
+            padding: var(--space-lg);
+            color: var(--gray-medium);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-header {
+                flex-direction: column;
+                gap: var(--space-md);
+            }
+
+            .hero-rating {
+                text-align: left;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .gallery-container {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-meta {
+                flex-direction: column;
+                gap: var(--space-md);
+            }
+        }
+    </style>
+
+    <script>
+        /* JavaScript - Dynamisches Laden aus DB */
+
+        const API_URL = 'http://localhost:3000/api';
+        let currentFlatId = null;
+
+        // Get Flat ID from URL
+        function getFlatIdFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('id');
+        }
+
+        // Load Flat Data
+        async function loadFlatData(flatId) {
+            try {
+                // FUTURE DATABASE LOGIC:
+                // const response = await fetch(`${API_URL}/flats/${flatId}`);
+                // const flat = await response.json();
+
+                // PLACEHOLDER - Simuliert DB-Abfrage
+                const flatsData = {
+                    '1': {
+                        id: 1,
+                        address: "Zeppelinstraße 10",
+                        city: "Holzgerlingen",
+                        zipCode: "71088",
+                        description: "Schöne 3-Zimmer Wohnung in ruhiger Lage mit Balkon. Die Wohnung wurde vor 2 Jahren renoviert und verfügt über eine moderne Einbauküche. Der Vermieter ist sehr zuverlässig, Reparaturen werden schnell durchgeführt. Die Nachbarschaft ist ruhig und familienfreundlich.",
+                        rating_overall: 4.7,
+                        rating_condition: 4.8,
+                        rating_communication: 4.5,
+                        rating_costs: 4.8,
+                        rating_count: 3,
+                        created_at: "2024-01-15"
+                    },
+                    '2': {
+                        id: 2,
+                        address: "Zeppelinstraße 18",
+                        city: "Holzgerlingen",
+                        zipCode: "71088",
+                        description: "Gemütliche 2-Zimmer Wohnung mit guter Anbindung. Die Wohnung ist hell und hat einen kleinen Garten. Der Vermieter ist manchmal schwer erreichbar, aber ansonsten gibt es keine großen Probleme.",
+                        rating_overall: 3.5,
+                        rating_condition: 3.8,
+                        rating_communication: 2.8,
+                        rating_costs: 3.9,
+                        rating_count: 2,
+                        created_at: "2024-02-20"
+                    },
+                    '3': {
+                        id: 3,
+                        address: "Zeppelinstraße 3",
+                        city: "Holzgerlingen",
+                        zipCode: "71088",
+                        description: "Altbau-Wohnung mit Charme, aber renovierungsbedürftig. Schimmelprobleme im Bad, Vermieter reagiert nicht auf Mängelanzeigen. Die Lage ist gut, aber der Zustand der Wohnung lässt zu wünschen übrig.",
+                        rating_overall: 2.2,
+                        rating_condition: 2.0,
+                        rating_communication: 1.5,
+                        rating_costs: 3.0,
+                        rating_count: 5,
+                        created_at: "2023-11-10"
+                    },
+                    '4': {
+                        id: 4,
+                        address: "Marktplatz 1",
+                        city: "Stuttgart",
+                        zipCode: "70173",
+                        description: "Moderne Loft-Wohnung im Herzen der Stadt mit hochwertiger Ausstattung. Der Vermieter ist professionell und sehr hilfsbereit. Die Wohnung wurde erst letztes Jahr komplett saniert. Perfekt für Singles oder Paare.",
+                        rating_overall: 4.9,
+                        rating_condition: 5.0,
+                        rating_communication: 4.9,
+                        rating_costs: 4.7,
+                        rating_count: 7,
+                        created_at: "2024-03-05"
+                    }
+                };
+
+                const flat = flatsData[flatId];
+
+                if (!flat) {
+                    showError();
+                    return;
+                }
+
+                renderFlatHero(flat);
+                renderRatingBreakdown(flat);
+                await loadImages(flatId);
+                await loadReviews(flatId);
+
+                document.getElementById('loadingContainer').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+
+            } catch (error) {
+                console.error('Error loading flat:', error);
+                showError();
+            }
+        }
+
+        // Render Flat Hero
+        function renderFlatHero(flat) {
+            const heroSection = document.getElementById('flatHero');
+            const stars = '★'.repeat(Math.round(flat.rating_overall));
+
+            heroSection.innerHTML = `
+                <div class="hero-header">
+                    <div>
+                        <h1 class="hero-title">${flat.address}</h1>
+                        <p class="hero-address">${flat.city}, ${flat.zipCode}</p>
+                    </div>
+                    <div class="hero-rating">
+                        <div class="rating-stars">${stars}</div>
+                        <div class="rating-number">${flat.rating_overall.toFixed(1)}</div>
+                        <div class="rating-count">${flat.rating_count} Bewertungen</div>
+                    </div>
+                </div>
+                <div class="hero-meta">
+                    <div class="meta-item">
+                        <span class="meta-label">Stadt</span>
+                        <span class="meta-value">${flat.city}</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">PLZ</span>
+                        <span class="meta-value">${flat.zipCode}</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Eingetragen</span>
+                        <span class="meta-value">${formatDate(flat.created_at)}</span>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('descriptionContent').textContent = flat.description;
+        }
+
+        // Render Rating Breakdown
+        function renderRatingBreakdown(flat) {
+            const categories = [
+                { label: 'Zustand der Wohnung', value: flat.rating_condition },
+                { label: 'Kommunikation', value: flat.rating_communication },
+                { label: 'Kosten & Nebenkosten', value: flat.rating_costs }
+            ];
+
+            const barsHTML = categories.map(cat => `
+                <div class="rating-bar-item">
+                    <div class="rating-bar-header">
+                        <span class="rating-bar-label">${cat.label}</span>
+                        <span class="rating-bar-value">${cat.value.toFixed(1)} / 5.0</span>
+                    </div>
+                    <div class="rating-bar-bg">
+                        <div class="rating-bar-fill" style="width: ${(cat.value / 5) * 100}%"></div>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('ratingBars').innerHTML = barsHTML;
+        }
+
+        // Load Images
+        async function loadImages(flatId) {
+            try {
+                // FUTURE DATABASE LOGIC:
+                // const response = await fetch(`${API_URL}/flats/${flatId}/images`);
+                // const images = await response.json();
+
+                // PLACEHOLDER - Keine Bilder vorhanden (kommen später aus DB)
+                const images = [];
+
+                const galleryContainer = document.getElementById('galleryContainer');
+
+                if (images.length === 0) {
+                    galleryContainer.innerHTML = `
+                        <div class="no-images">
+                            <p>Noch keine Bilder vorhanden</p>
+                        </div>
+                    `;
+                } else {
+                    galleryContainer.innerHTML = images.map(img => `
+                        <img src="${img.url}" alt="Wohnungsbild" class="gallery-image">
+                    `).join('');
+                }
+
+            } catch (error) {
+                console.error('Error loading images:', error);
+            }
+        }
+
+        // Load Reviews
+        async function loadReviews(flatId) {
+            try {
+                // FUTURE DATABASE LOGIC:
+                // const response = await fetch(`${API_URL}/flats/${flatId}/reviews`);
+                // const reviews = await response.json();
+
+                // PLACEHOLDER - Simuliert DB-Abfrage
+                const reviewsData = {
+                    '1': [
+                        {
+                            id: 1,
+                            user_name: "Anna M.",
+                            rating: 5,
+                            comment: "Tolle Wohnung, super Vermieter! Kann ich nur weiterempfehlen.",
+                            created_at: "2024-03-15"
+                        },
+                        {
+                            id: 2,
+                            user_name: "Thomas K.",
+                            rating: 4,
+                            comment: "Gute Wohnung in schöner Lage. Manchmal etwas laut von der Straße, aber sonst alles top.",
+                            created_at: "2024-02-20"
+                        },
+                        {
+                            id: 3,
+                            user_name: "Sarah L.",
+                            rating: 5,
+                            comment: "Sehr zufrieden! Der Vermieter kümmert sich um alles schnell und zuverlässig.",
+                            created_at: "2024-01-30"
+                        }
+                    ],
+                    '2': [
+                        {
+                            id: 4,
+                            user_name: "Michael B.",
+                            rating: 3,
+                            comment: "Die Wohnung ist okay, aber der Vermieter ist oft schwer zu erreichen.",
+                            created_at: "2024-03-01"
+                        },
+                        {
+                            id: 5,
+                            user_name: "Lisa W.",
+                            rating: 4,
+                            comment: "Schöne Wohnung mit Garten. Preis-Leistung stimmt.",
+                            created_at: "2024-02-15"
+                        }
+                    ],
+                    '3': [
+                        {
+                            id: 6,
+                            user_name: "Frank H.",
+                            rating: 2,
+                            comment: "Schimmel im Bad, Vermieter ignoriert Mängel. Nicht zu empfehlen.",
+                            created_at: "2024-03-10"
+                        },
+                        {
+                            id: 7,
+                            user_name: "Julia S.",
+                            rating: 2,
+                            comment: "Zustand der Wohnung ist schlecht. Viele Reparaturen nötig.",
+                            created_at: "2024-02-25"
+                        },
+                        {
+                            id: 8,
+                            user_name: "Peter R.",
+                            rating: 3,
+                            comment: "Lage ist gut, aber die Wohnung bräuchte dringend eine Renovierung.",
+                            created_at: "2024-01-20"
+                        },
+                        {
+                            id: 9,
+                            user_name: "Nina F.",
+                            rating: 2,
+                            comment: "Vermieter reagiert nicht auf Anfragen. Sehr frustrierend.",
+                            created_at: "2024-01-05"
+                        },
+                        {
+                            id: 10,
+                            user_name: "Klaus D.",
+                            rating: 2,
+                            comment: "Preis ist okay, aber der Service ist mangelhaft.",
+                            created_at: "2023-12-15"
+                        }
+                    ],
+                    '4': [
+                        {
+                            id: 11,
+                            user_name: "Sophie M.",
+                            rating: 5,
+                            comment: "Perfekte Wohnung! Modern, sauber und der Vermieter ist top!",
+                            created_at: "2024-03-20"
+                        },
+                        {
+                            id: 12,
+                            user_name: "David K.",
+                            rating: 5,
+                            comment: "Beste Wohnung die ich je hatte. Absolut empfehlenswert!",
+                            created_at: "2024-03-12"
+                        },
+                        {
+                            id: 13,
+                            user_name: "Emma L.",
+                            rating: 5,
+                            comment: "Traumwohnung in bester Lage. Der Vermieter ist sehr professionell.",
+                            created_at: "2024-03-05"
+                        },
+                        {
+                            id: 14,
+                            user_name: "Max W.",
+                            rating: 5,
+                            comment: "Hochwertige Ausstattung, faire Miete. Sehr zufrieden!",
+                            created_at: "2024-02-28"
+                        },
+                        {
+                            id: 15,
+                            user_name: "Lena B.",
+                            rating: 5,
+                            comment: "Kann ich nur weiterempfehlen. Alles perfekt!",
+                            created_at: "2024-02-20"
+                        },
+                        {
+                            id: 16,
+                            user_name: "Tim H.",
+                            rating: 5,
+                            comment: "Super Vermieter, tolle Wohnung. Was will man mehr?",
+                            created_at: "2024-02-10"
+                        },
+                        {
+                            id: 17,
+                            user_name: "Jana S.",
+                            rating: 4,
+                            comment: "Fast perfekt. Nur die Miete könnte etwas günstiger sein.",
+                            created_at: "2024-02-01"
+                        }
+                    ]
+                };
+
+                const reviews = reviewsData[flatId] || [];
+                document.getElementById('reviewCount').textContent = reviews.length;
+
+                const reviewsContainer = document.getElementById('reviewsContainer');
+
+                if (reviews.length === 0) {
+                    reviewsContainer.innerHTML = `
+                        <div class="no-reviews">
+                            <p>Noch keine Bewertungen vorhanden</p>
+                            <p style="font-size: 0.9rem; margin-top: 0.5rem;">Sei der Erste und teile deine Erfahrung!</p>
+                        </div>
+                    `;
+                } else {
+                    reviewsContainer.innerHTML = reviews.map(review => `
+                        <div class="review-card">
+                            <div class="review-header">
+                                <span class="review-author">${review.user_name}</span>
+                                <span class="review-rating">★ ${review.rating.toFixed(1)}</span>
+                            </div>
+                            <div class="review-date">${formatDate(review.created_at)}</div>
+                            <div class="review-comment">${review.comment}</div>
+                        </div>
+                    `).join('');
+                }
+
+            } catch (error) {
+                console.error('Error loading reviews:', error);
+            }
+        }
+
+        // Format Date
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return date.toLocaleDateString('de-DE', options);
+        }
+
+        // Show Error
+        function showError() {
+            document.getElementById('loadingContainer').style.display = 'none';
+            document.getElementById('errorContainer').style.display = 'flex';
+        }
+
+        // Add Review Button
+        document.getElementById('addReviewBtn').addEventListener('click', () => {
+            const token = localStorage.getItem('authToken');
+
+            if (!token) {
+                alert('Bitte melde dich an, um eine Bewertung abzugeben.');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            window.location.href = `add-flat.html?flatId=${currentFlatId}`;
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            currentFlatId = getFlatIdFromUrl();
+
+            if (!currentFlatId) {
+                showError();
+                return;
+            }
+
+            loadFlatData(currentFlatId);
+        });
+    </script>
+</body>
+</html>

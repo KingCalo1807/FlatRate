@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wohnung bewerten - FlatRate</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- HTML STRUKTUR -->
+    <div class="page-wrapper">
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <div class="header-content">
+                    <a href="index.html" class="logo-section">
+                        <div class="logo-icon">
+                            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M30 20 L30 40 L20 40 L20 60 L40 60 L40 50" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M70 20 L70 40 L80 40 L80 60 L60 60 L60 50" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M50 60 L50 80 L40 80 L40 100" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M50 60 L50 80 L60 80 L60 100" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="logo-text">
+                            <span class="logo-title">FlatRate</span>
+                            <span class="logo-subtitle">Bewerte deinen Vermieter</span>
+                        </div>
+                    </a>
+                    <nav class="nav">
+                        <a href="map.html" class="nav-link">Karte</a>
+                        <a href="login.html" class="nav-link">Login</a>
+                    </nav>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="container">
+                <!-- Back Button -->
+                <div class="back-section">
+                    <a href="map.html" class="back-link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M19 12H5M12 19l-7-7 7-7"/>
+                        </svg>
+                        Zurück zur Karte
+                    </a>
+                </div>
+
+                <!-- Form Container -->
+                <div class="form-container">
+                    <div class="form-header">
+                        <h1 class="form-title">Wohnung bewerten</h1>
+                        <p class="form-subtitle">Teile deine Erfahrung und hilf anderen Mietern bei wichtigen Entscheidungen.</p>
+                    </div>
+
+                    <!-- Progress Indicator -->
+                    <div class="progress-container">
+                        <div class="progress-step active" data-step="1">
+                            <div class="progress-number">1</div>
+                            <div class="progress-label">Adresse</div>
+                        </div>
+                        <div class="progress-line"></div>
+                        <div class="progress-step" data-step="2">
+                            <div class="progress-number">2</div>
+                            <div class="progress-label">Bewertung</div>
+                        </div>
+                        <div class="progress-line"></div>
+                        <div class="progress-step" data-step="3">
+                            <div class="progress-number">3</div>
+                            <div class="progress-label">Details</div>
+                        </div>
+                    </div>
+
+                    <!-- Form -->
+                    <form class="rating-form" id="ratingForm">
+                        <!-- Step 1: Address -->
+                        <div class="form-step active" data-step="1">
+                            <h2 class="step-title">Adresse der Wohnung</h2>
+
+                            <div class="form-group">
+                                <label class="form-label">Straße und Hausnummer *</label>
+                                <input
+                                    type="text"
+                                    class="form-input"
+                                    id="street"
+                                    placeholder="z.B. Hauptstraße 42"
+                                    required
+                                >
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">PLZ *</label>
+                                    <input
+                                        type="text"
+                                        class="form-input"
+                                        id="zipCode"
+                                        placeholder="z.B. 70173"
+                                        required
+                                    >
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Stadt *</label>
+                                    <input
+                                        type="text"
+                                        class="form-input"
+                                        id="city"
+                                        placeholder="z.B. Stuttgart"
+                                        required
+                                    >
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-primary btn-large" id="nextStep1">
+                                    Weiter
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Ratings -->
+                        <div class="form-step" data-step="2">
+                            <h2 class="step-title">Bewerte die Wohnung</h2>
+
+                            <div class="rating-group">
+                                <label class="rating-label">Zustand der Wohnung *</label>
+                                <div class="star-rating" data-rating="rating_condition">
+                                    <span class="star" data-value="1">★</span>
+                                    <span class="star" data-value="2">★</span>
+                                    <span class="star" data-value="3">★</span>
+                                    <span class="star" data-value="4">★</span>
+                                    <span class="star" data-value="5">★</span>
+                                </div>
+                                <input type="hidden" id="rating_condition" required>
+                            </div>
+
+                            <div class="rating-group">
+                                <label class="rating-label">Kommunikation mit Vermieter *</label>
+                                <div class="star-rating" data-rating="rating_communication">
+                                    <span class="star" data-value="1">★</span>
+                                    <span class="star" data-value="2">★</span>
+                                    <span class="star" data-value="3">★</span>
+                                    <span class="star" data-value="4">★</span>
+                                    <span class="star" data-value="5">★</span>
+                                </div>
+                                <input type="hidden" id="rating_communication" required>
+                            </div>
+
+                            <div class="rating-group">
+                                <label class="rating-label">Kosten & Nebenkosten *</label>
+                                <div class="star-rating" data-rating="rating_costs">
+                                    <span class="star" data-value="1">★</span>
+                                    <span class="star" data-value="2">★</span>
+                                    <span class="star" data-value="3">★</span>
+                                    <span class="star" data-value="4">★</span>
+                                    <span class="star" data-value="5">★</span>
+                                </div>
+                                <input type="hidden" id="rating_costs" required>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-secondary" id="prevStep2">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <path d="M19 12H5M12 19l-7-7 7-7"/>
+                                    </svg>
+                                    Zurück
+                                </button>
+                                <button type="button" class="btn btn-primary" id="nextStep2">
+                                    Weiter
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Details -->
+                        <div class="form-step" data-step="3">
+                            <h2 class="step-title">Zusätzliche Informationen</h2>
+
+                            <div class="form-group">
+                                <label class="form-label">Deine Erfahrung (optional)</label>
+                                <textarea
+                                    class="form-textarea"
+                                    id="description"
+                                    placeholder="Beschreibe deine Erfahrung mit der Wohnung und dem Vermieter..."
+                                    rows="6"
+                                ></textarea>
+                                <small class="form-hint">Sei fair und ehrlich. Deine Bewertung hilft anderen Mietern.</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Bilder hochladen (optional)</label>
+                                <div class="file-upload" id="fileUpload">
+                                    <input
+                                        type="file"
+                                        id="images"
+                                        accept="image/*"
+                                        multiple
+                                        style="display: none;"
+                                    >
+                                    <div class="upload-placeholder">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                            <polyline points="17 8 12 3 7 8"></polyline>
+                                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                                        </svg>
+                                        <p>Klicke hier oder ziehe Bilder hierher</p>
+                                        <small>PNG, JPG bis 5MB pro Bild</small>
+                                    </div>
+                                    <div class="image-preview-container" id="imagePreviewContainer"></div>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-secondary" id="prevStep3">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <path d="M19 12H5M12 19l-7-7 7-7"/>
+                                    </svg>
+                                    Zurück
+                                </button>
+                                <button type="submit" class="btn btn-primary btn-large" id="submitBtn">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                    Bewertung absenden
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+
+        <!-- Success Modal -->
+        <div class="modal" id="successModal">
+            <div class="modal-content">
+                <div class="success-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                </div>
+                <h2>Bewertung erfolgreich!</h2>
+                <p>Vielen Dank für deine ehrliche Bewertung. Du hilfst damit anderen Mietern.</p>
+                <div class="modal-actions">
+                    <a href="map.html" class="btn btn-primary">Zur Karte</a>
+                    <button class="btn btn-secondary" id="addAnotherBtn">Weitere Bewertung</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* CSS - Design gemäß Moodboard "Jade" */
+
+        :root {
+            --jade-dark: #0B3B3C;
+            --jade-primary: #1B5E5F;
+            --jade-medium: #2D7F7F;
+            --jade-light: #4FA09F;
+            --jade-mint: #7FC8C3;
+            --jade-pale: #A8D5D3;
+
+            --anthracite: #2C3333;
+            --gray-dark: #3D4545;
+            --gray-medium: #5F6868;
+            --gray-light: #E8EFEF;
+            --white: #FFFFFF;
+            --off-white: #F8FAFA;
+
+            --font-display: 'Playfair Display', serif;
+            --font-body: 'Work Sans', sans-serif;
+
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 2rem;
+            --space-lg: 4rem;
+
+            --shadow-sm: 0 2px 8px rgba(11, 59, 60, 0.08);
+            --shadow-md: 0 4px 16px rgba(11, 59, 60, 0.12);
+            --shadow-lg: 0 8px 32px rgba(11, 59, 60, 0.16);
+
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--off-white);
+            color: var(--anthracite);
+            line-height: 1.6;
+        }
+
+        .page-wrapper {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            background: var(--jade-dark);
+            padding: var(--space-sm) 0;
+            box-shadow: var(--shadow-md);
+            z-index: 1000;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 var(--space-md);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            color: var(--jade-mint);
+            transition: transform 0.3s ease;
+        }
+
+        .logo-section:hover .logo-icon {
+            transform: rotate(90deg) scale(1.1);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-title {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--jade-mint);
+            line-height: 1;
+        }
+
+        .logo-subtitle {
+            font-size: 0.7rem;
+            color: var(--jade-pale);
+            font-weight: 300;
+        }
+
+        .nav {
+            display: flex;
+            gap: var(--space-md);
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--jade-pale);
+            text-decoration: none;
+            font-weight: 400;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--jade-mint);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--jade-mint);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .btn {
+            padding: 0.625rem 1.25rem;
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+        }
+
+        .btn svg {
+            width: 18px;
+            height: 18px;
+            stroke-width: 2;
+        }
+
+        .btn-primary {
+            background: var(--jade-medium);
+            color: var(--white);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-primary:hover {
+            background: var(--jade-primary);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--jade-dark);
+            border: 2px solid var(--jade-dark);
+        }
+
+        .btn-secondary:hover {
+            background: var(--jade-dark);
+            color: var(--white);
+        }
+
+        .btn-large {
+            padding: 1rem 2rem;
+            font-size: 1rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: var(--space-lg) 0;
+            flex: 1;
+        }
+
+        .back-section {
+            margin-bottom: var(--space-md);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            color: var(--jade-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-link svg {
+            width: 20px;
+            height: 20px;
+            stroke-width: 2;
+        }
+
+        .back-link:hover {
+            color: var(--jade-medium);
+            transform: translateX(-4px);
+        }
+
+        /* Form Container */
+        .form-container {
+            background: var(--white);
+            padding: var(--space-lg);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: var(--space-lg);
+        }
+
+        .form-title {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            color: var(--jade-dark);
+            margin-bottom: var(--space-sm);
+        }
+
+        .form-subtitle {
+            color: var(--gray-medium);
+            font-size: 1.1rem;
+        }
+
+        /* Progress Indicator */
+        .progress-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: var(--space-lg);
+            padding: var(--space-md) 0;
+        }
+
+        .progress-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-xs);
+            opacity: 0.4;
+            transition: opacity 0.3s ease;
+        }
+
+        .progress-step.active {
+            opacity: 1;
+        }
+
+        .progress-number {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gray-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--gray-medium);
+            transition: all 0.3s ease;
+        }
+
+        .progress-step.active .progress-number {
+            background: var(--jade-medium);
+            color: var(--white);
+            transform: scale(1.1);
+        }
+
+        .progress-label {
+            font-size: 0.85rem;
+            color: var(--gray-medium);
+            font-weight: 500;
+        }
+
+        .progress-step.active .progress-label {
+            color: var(--jade-dark);
+        }
+
+        .progress-line {
+            width: 100px;
+            height: 2px;
+            background: var(--gray-light);
+            margin: 0 var(--space-sm);
+        }
+
+        /* Form */
+        .rating-form {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .form-step {
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .form-step.active {
+            display: block;
+        }
+
+        .step-title {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            color: var(--jade-dark);
+            margin-bottom: var(--space-lg);
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: var(--space-md);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: var(--space-md);
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: var(--jade-dark);
+            margin-bottom: var(--space-xs);
+            font-size: 0.95rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.875rem;
+            border: 2px solid var(--gray-light);
+            border-radius: var(--radius-md);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            color: var(--anthracite);
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--jade-medium);
+        }
+
+        .form-textarea {
+            width: 100%;
+            padding: 0.875rem;
+            border: 2px solid var(--gray-light);
+            border-radius: var(--radius-md);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            color: var(--anthracite);
+            resize: vertical;
+            min-height: 150px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--jade-medium);
+        }
+
+        .form-hint {
+            display: block;
+            margin-top: var(--space-xs);
+            font-size: 0.85rem;
+            color: var(--gray-medium);
+        }
+
+        /* Star Rating */
+        .rating-group {
+            margin-bottom: var(--space-lg);
+            text-align: center;
+        }
+
+        .rating-label {
+            display: block;
+            font-weight: 600;
+            color: var(--jade-dark);
+            margin-bottom: var(--space-md);
+            font-size: 1.1rem;
+        }
+
+        .star-rating {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-sm);
+        }
+
+        .star {
+            font-size: 3rem;
+            color: var(--gray-light);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+
+        .star:hover,
+        .star.active {
+            color: var(--jade-medium);
+            transform: scale(1.2);
+        }
+
+        .star.active {
+            animation: starPop 0.3s ease;
+        }
+
+        @keyframes starPop {
+            0%, 100% { transform: scale(1.2); }
+            50% { transform: scale(1.4); }
+        }
+
+        /* File Upload */
+        .file-upload {
+            border: 2px dashed var(--gray-light);
+            border-radius: var(--radius-md);
+            padding: var(--space-lg);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .file-upload:hover {
+            border-color: var(--jade-medium);
+            background: var(--off-white);
+        }
+
+        .upload-placeholder svg {
+            width: 50px;
+            height: 50px;
+            color: var(--gray-medium);
+            margin-bottom: var(--space-sm);
+            stroke-width: 2;
+        }
+
+        .upload-placeholder p {
+            color: var(--jade-dark);
+            font-weight: 500;
+            margin-bottom: var(--space-xs);
+        }
+
+        .upload-placeholder small {
+            color: var(--gray-medium);
+        }
+
+        .image-preview-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: var(--space-sm);
+            margin-top: var(--space-md);
+        }
+
+        .image-preview {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+        }
+
+        .image-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .image-remove {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--anthracite);
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+
+        .image-remove:hover {
+            background: #fff;
+            transform: scale(1.1);
+        }
+
+        /* Form Actions */
+        .form-actions {
+            display: flex;
+            gap: var(--space-md);
+            justify-content: center;
+            margin-top: var(--space-lg);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(11, 59, 60, 0.9);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal-content {
+            background: var(--white);
+            padding: var(--space-lg);
+            border-radius: var(--radius-lg);
+            max-width: 500px;
+            text-align: center;
+            animation: slideUp 0.4s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto var(--space-md);
+            background: var(--jade-pale);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .success-icon svg {
+            width: 50px;
+            height: 50px;
+            color: var(--jade-dark);
+            stroke-width: 3;
+        }
+
+        .modal-content h2 {
+            font-family: var(--font-display);
+            color: var(--jade-dark);
+            font-size: 2rem;
+            margin-bottom: var(--space-sm);
+        }
+
+        .modal-content p {
+            color: var(--gray-dark);
+            margin-bottom: var(--space-lg);
+            line-height: 1.7;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: var(--space-md);
+            justify-content: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .form-title {
+                font-size: 2rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .progress-container {
+                flex-direction: column;
+                gap: var(--space-sm);
+            }
+
+            .progress-line {
+                width: 2px;
+                height: 50px;
+                margin: 0;
+            }
+
+            .star {
+                font-size: 2rem;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+
+    <script>
+        /* JavaScript - Formular Logik & DB-Anbindung */
+
+        const API_URL = 'http://localhost:3000/api';
+        let currentStep = 1;
+        let selectedImages = [];
+        let ratingData = {
+            rating_condition: 0,
+            rating_communication: 0,
+            rating_costs: 0
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            initStarRatings();
+            initFileUpload();
+            initNavigation();
+            checkAuthentication();
+        });
+
+        // Check if user is authenticated
+        function checkAuthentication() {
+            const token = localStorage.getItem('authToken');
+
+            if (!token) {
+                alert('Bitte melde dich an, um eine Bewertung abzugeben.');
+                window.location.href = 'login.html';
+            }
+        }
+
+        // Star Rating System
+        function initStarRatings() {
+            const ratingContainers = document.querySelectorAll('.star-rating');
+
+            ratingContainers.forEach(container => {
+                const stars = container.querySelectorAll('.star');
+                const ratingField = container.dataset.rating;
+
+                stars.forEach(star => {
+                    star.addEventListener('click', () => {
+                        const value = parseInt(star.dataset.value);
+                        ratingData[ratingField] = value;
+                        document.getElementById(ratingField).value = value;
+
+                        // Update stars
+                        stars.forEach(s => {
+                            const starValue = parseInt(s.dataset.value);
+                            if (starValue <= value) {
+                                s.classList.add('active');
+                            } else {
+                                s.classList.remove('active');
+                            }
+                        });
+                    });
+
+                    // Hover effect
+                    star.addEventListener('mouseenter', () => {
+                        const value = parseInt(star.dataset.value);
+                        stars.forEach(s => {
+                            const starValue = parseInt(s.dataset.value);
+                            if (starValue <= value) {
+                                s.style.color = 'var(--jade-light)';
+                            }
+                        });
+                    });
+
+                    star.addEventListener('mouseleave', () => {
+                        stars.forEach(s => {
+                            const currentRating = ratingData[ratingField];
+                            const starValue = parseInt(s.dataset.value);
+                            if (starValue <= currentRating) {
+                                s.style.color = 'var(--jade-medium)';
+                            } else {
+                                s.style.color = 'var(--gray-light)';
+                            }
+                        });
+                    });
+                });
+            });
+        }
+
+        // File Upload
+        function initFileUpload() {
+            const fileUpload = document.getElementById('fileUpload');
+            const fileInput = document.getElementById('images');
+
+            fileUpload.addEventListener('click', () => {
+                fileInput.click();
+            });
+
+            fileInput.addEventListener('change', (e) => {
+                handleFiles(e.target.files);
+            });
+
+            // Drag & Drop
+            fileUpload.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                fileUpload.style.borderColor = 'var(--jade-medium)';
+                fileUpload.style.background = 'var(--off-white)';
+            });
+
+            fileUpload.addEventListener('dragleave', () => {
+                fileUpload.style.borderColor = 'var(--gray-light)';
+                fileUpload.style.background = 'transparent';
+            });
+
+            fileUpload.addEventListener('drop', (e) => {
+                e.preventDefault();
+                fileUpload.style.borderColor = 'var(--gray-light)';
+                fileUpload.style.background = 'transparent';
+                handleFiles(e.dataTransfer.files);
+            });
+        }
+
+        function handleFiles(files) {
+            const previewContainer = document.getElementById('imagePreviewContainer');
+
+            Array.from(files).forEach(file => {
+                if (!file.type.startsWith('image/')) {
+                    alert('Bitte nur Bilddateien hochladen.');
+                    return;
+                }
+
+                if (file.size > 5 * 1024 * 1024) {
+                    alert(`${file.name} ist zu groß. Maximale Größe: 5MB`);
+                    return;
+                }
+
+                selectedImages.push(file);
+
+                // Create preview
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const preview = document.createElement('div');
+                    preview.className = 'image-preview';
+                    preview.innerHTML = `
+                        <img src="${e.target.result}" alt="Preview">
+                        <button type="button" class="image-remove" data-index="${selectedImages.length - 1}">×</button>
+                    `;
+                    previewContainer.appendChild(preview);
+
+                    // Remove button
+                    preview.querySelector('.image-remove').addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const index = parseInt(e.target.dataset.index);
+                        selectedImages.splice(index, 1);
+                        preview.remove();
+                        updateImageIndices();
+                    });
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function updateImageIndices() {
+            const previews = document.querySelectorAll('.image-remove');
+            previews.forEach((btn, index) => {
+                btn.dataset.index = index;
+            });
+        }
+
+        // Navigation
+        function initNavigation() {
+            // Step 1
+            document.getElementById('nextStep1').addEventListener('click', () => {
+                if (validateStep1()) {
+                    goToStep(2);
+                }
+            });
+
+            // Step 2
+            document.getElementById('prevStep2').addEventListener('click', () => {
+                goToStep(1);
+            });
+
+            document.getElementById('nextStep2').addEventListener('click', () => {
+                if (validateStep2()) {
+                    goToStep(3);
+                }
+            });
+
+            // Step 3
+            document.getElementById('prevStep3').addEventListener('click', () => {
+                goToStep(2);
+            });
+
+            // Form Submit
+            document.getElementById('ratingForm').addEventListener('submit', handleSubmit);
+
+            // Add Another Button
+            document.getElementById('addAnotherBtn').addEventListener('click', () => {
+                location.reload();
+            });
+        }
+
+        function goToStep(step) {
+            // Hide all steps
+            document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.progress-step').forEach(s => s.classList.remove('active'));
+
+            // Show target step
+            document.querySelector(`.form-step[data-step="${step}"]`).classList.add('active');
+            document.querySelector(`.progress-step[data-step="${step}"]`).classList.add('active');
+
+            currentStep = step;
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Validation
+        function validateStep1() {
+            const street = document.getElementById('street').value.trim();
+            const zipCode = document.getElementById('zipCode').value.trim();
+            const city = document.getElementById('city').value.trim();
+
+            if (!street || !zipCode || !city) {
+                alert('Bitte fülle alle Pflichtfelder aus.');
+                return false;
+            }
+
+            if (!/^\d{5}$/.test(zipCode)) {
+                alert('Bitte gib eine gültige PLZ ein (5 Ziffern).');
+                return false;
+            }
+
+            return true;
+        }
+
+        function validateStep2() {
+            if (ratingData.rating_condition === 0 ||
+                ratingData.rating_communication === 0 ||
+                ratingData.rating_costs === 0) {
+                alert('Bitte bewerte alle Kategorien.');
+                return false;
+            }
+
+            return true;
+        }
+
+        // Submit Form
+        async function handleSubmit(e) {
+            e.preventDefault();
+
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Wird übermittelt...';
+
+            try {
+                // Collect form data
+                const formData = {
+                    street: document.getElementById('street').value.trim(),
+                    zipCode: document.getElementById('zipCode').value.trim(),
+                    city: document.getElementById('city').value.trim(),
+                    description: document.getElementById('description').value.trim(),
+                    rating_condition: ratingData.rating_condition,
+                    rating_communication: ratingData.rating_communication,
+                    rating_costs: ratingData.rating_costs,
+                    rating_overall: calculateOverallRating(),
+                    user_id: getUserId()
+                };
+
+                console.log('Formular-Daten:', formData);
+
+                // FUTURE DATABASE LOGIC - Step 1: Create/Find Flat
+                // const flatResponse = await fetch(`${API_URL}/flats`, {
+                //     method: 'POST',
+                //     headers: {
+                //         'Content-Type': 'application/json',
+                //         'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+                //     },
+                //     body: JSON.stringify({
+                //         address: formData.street,
+                //         city: formData.city,
+                //         zipCode: formData.zipCode
+                //     })
+                // });
+                // const flat = await flatResponse.json();
+
+                // FUTURE DATABASE LOGIC - Step 2: Create Rating
+                // const ratingResponse = await fetch(`${API_URL}/ratings`, {
+                //     method: 'POST',
+                //     headers: {
+                //         'Content-Type': 'application/json',
+                //         'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+                //     },
+                //     body: JSON.stringify({
+                //         flat_id: flat.id,
+                //         user_id: formData.user_id,
+                //         rating_overall: formData.rating_overall,
+                //         rating_condition: formData.rating_condition,
+                //         rating_communication: formData.rating_communication,
+                //         rating_costs: formData.rating_costs,
+                //         comment: formData.description
+                //     })
+                // });
+
+                // FUTURE DATABASE LOGIC - Step 3: Upload Images
+                // if (selectedImages.length > 0) {
+                //     const imageFormData = new FormData();
+                //     selectedImages.forEach((img, index) => {
+                //         imageFormData.append(`image_${index}`, img);
+                //     });
+                //     imageFormData.append('flat_id', flat.id);
+                //
+                //     await fetch(`${API_URL}/flats/${flat.id}/images`, {
+                //         method: 'POST',
+                //         headers: {
+                //             'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+                //         },
+                //         body: imageFormData
+                //     });
+                // }
+
+                // Simulate API delay
+                await new Promise(resolve => setTimeout(resolve, 1500));
+
+                // Show success modal
+                showSuccessModal();
+
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                alert('Fehler beim Absenden der Bewertung. Bitte versuche es erneut.');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = `
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    Bewertung absenden
+                `;
+            }
+        }
+
+        function calculateOverallRating() {
+            const avg = (ratingData.rating_condition +
+                        ratingData.rating_communication +
+                        ratingData.rating_costs) / 3;
+            return Math.round(avg * 10) / 10;
+        }
+
+        function getUserId() {
+            // FUTURE: Get from JWT token or session
+            const token = localStorage.getItem('authToken');
+            // Temporary placeholder
+            return 1;
+        }
+
+        function showSuccessModal() {
+            const modal = document.getElementById('successModal');
+            modal.classList.add('active');
+        }
+
+        // Geocode address for lat/lng (will be used when saving to DB)
+        async function geocodeAddress(street, zipCode, city) {
+            try {
+                const address = `${street}, ${zipCode} ${city}`;
+                const response = await fetch(
+                    `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}&limit=1`
+                );
+                const data = await response.json();
+
+                if (data && data.length > 0) {
+                    return {
+                        latitude: parseFloat(data[0].lat),
+                        longitude: parseFloat(data[0].lon)
+                    };
+                }
+                return null;
+            } catch (error) {
+                console.error('Geocoding error:', error);
+                return null;
+            }
+        }
+
+        // Database Helper Functions (will be used when DB is ready)
+        const DatabaseHelper = {
+            // Create or find flat
+            async createFlat(flatData) {
+                // Check if flat already exists
+                // const existing = await fetch(`${API_URL}/flats/search?address=${flatData.address}&city=${flatData.city}`);
+                // if (existing) return existing;
+
+                // Geocode address
+                const coords = await geocodeAddress(flatData.address, flatData.zipCode, flatData.city);
+
+                // Create new flat
+                // const response = await fetch(`${API_URL}/flats`, {
+                //     method: 'POST',
+                //     body: JSON.stringify({
+                //         ...flatData,
+                //         latitude: coords?.latitude,
+                //         longitude: coords?.longitude
+                //     })
+                // });
+                // return await response.json();
+
+                console.log('Flat would be created with:', { ...flatData, ...coords });
+            },
+
+            // Create rating
+            async createRating(ratingData) {
+                // const response = await fetch(`${API_URL}/ratings`, {
+                //     method: 'POST',
+                //     body: JSON.stringify(ratingData)
+                // });
+                // return await response.json();
+
+                console.log('Rating would be created with:', ratingData);
+            },
+
+            // Upload images
+            async uploadImages(flatId, images) {
+                // const formData = new FormData();
+                // images.forEach((img, index) => {
+                //     formData.append(`image_${index}`, img);
+                // });
+                //
+                // const response = await fetch(`${API_URL}/flats/${flatId}/images`, {
+                //     method: 'POST',
+                //     body: formData
+                // });
+                // return await response.json();
+
+                console.log(`${images.length} images would be uploaded for flat ${flatId}`);
+            }
+        };
+    </script>
+</body>
+</html>
